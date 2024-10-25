@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+    controllerName="mcc.workbench.admin.settings.controller.ToolSuite.FAQSettings.FAQList">
+    <Dialog title="Create Document" contentWidth="70%" id="createDialog">
+        <content>
+            <form:SimpleForm layout="ResponsiveGridLayout" editable="true"
+                class="sapUiContentPadding">
+                <Label text="Title" />
+                <Input id="Title" valueState="None" />
+                <Label text="Information" />
+                <TextArea id="Information" growing="true" valueState="None" maxLength="10000000" />
+                <Label text="Source link" />
+                <Input id="sourceLink" valueState="None" />
+                <Label text="Original Creation Date" />
+                <DatePicker id="originalCreationDate" valueState="None" />
+            </form:SimpleForm>
+        </content>
+        <beginButton>
+            <Button text="Create" press="_onCreate" />
+        </beginButton>
+        <endButton>
+            <Button text="Cancel" press="_onCancel" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

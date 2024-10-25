@@ -1,0 +1,81 @@
+<mvc:View controllerName="mcc.workbench.admin.settings.controller.SolutionHub.MCCTags.TagList" xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f"
+	xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core" xmlns:m="sap.m" xmlns="sap.ui.table" xmlns:semantic="sap.m.semantic">
+	<m:App>
+		<m:pages>
+			<m:Page title="{i18n>panelTitleMCCTags}" navButtonPress="onNavBack" showNavButton="true">
+				<m:content>
+					<f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false">
+						<!-- DynamicPage Content -->
+						<f:content>
+							<Table id="tagTable" selectionMode="None" visibleRowCountMode="Auto" rows="{ path: 'AdminApp>/MCCTags', filters: [{path: 'Type', operator: 'EQ', value1: 'MCC'}], sorter: {path: 'Name'}}"
+								ariaLabelledBy="title" rowActionCount="2">
+								<rowActionTemplate>
+									<RowAction>
+										<items>
+											<RowActionItem type="Custom" icon="{= ${AdminApp>_editmode} === false || ${AdminApp>_editmode} === undefined ? 'sap-icon://edit' : 'sap-icon://save'}"
+												press="firstActionPressed"/>
+											<RowActionItem type="Custom" icon="{= ${AdminApp>_editmode} === false || ${AdminApp>_editmode} === undefined ? 'sap-icon://delete' : 'sap-icon://decline'}"
+												press="secondActionPressed"/>
+										</items>
+									</RowAction>
+								</rowActionTemplate>
+								<extension>
+									<m:OverflowToolbar>
+										<!--<m:Title id="title" text="{i18n>panelTitleMCCTags}"/>-->
+										<m:ToolbarSpacer/>
+										<m:SearchField search="onSearch" width="25rem"/>
+										<!--<m:Button icon="sap-icon://excel-attachment" type="Transparent" press="onExcelExport"/>-->
+										<m:Button icon="sap-icon://add" type="Emphasized" press="onCreate" tooltip="Create new tag"/>
+									</m:OverflowToolbar>
+								</extension>
+								<columns>
+									<Column filterProperty="Name" sortProperty="Name" width="30%">
+										<m:Label text="Tag Name"/>
+										<template>
+											<m:Input value="{AdminApp>Name}" tooltip="{AdminApp>Name}" editable="{= ${AdminApp>_editmode} === true}"
+												valueState="{= ${AdminApp>Name} !== '' &amp;&amp; ${AdminApp>Name}.includes(' ') === false ? 'None' : 'Error'}" valueStateText="Mandatory, no spaces allowed."/>
+										</template>
+									</Column>
+									<Column filterProperty="Title" sortProperty="Title" width="30%">
+										<m:Label text="Tag Title"/>
+										<template>
+											<m:Input value="{AdminApp>Title}" tooltip="{AdminApp>Title}" editable="{= ${AdminApp>_editmode} === true}"
+												valueState="{= ${AdminApp>Title} !== '' ? 'None' : 'Error'}" valueStateText="Mandatory"/>
+										</template>
+									</Column>
+									<Column filterProperty="Description" sortProperty="Description" width="30%">
+										<m:Label text="Short Description"/>
+										<template>
+											<m:Input value="{AdminApp>Description}" tooltip="{AdminApp>Description}" editable="{= ${AdminApp>_editmode} === true}"
+												valueState="{= ${AdminApp>Description} !== '' ? 'None' : 'Error'}" showValueStateMessage="false"/>
+										</template>
+									</Column>
+									<Column filterProperty="DateFrom" sortProperty="DateFrom" width="15%">
+										<m:Label text="Start Date"/>
+										<template>
+											<m:DatePicker value="{path:'AdminApp>DateFrom', formatter:'.formatter.formatDate'}" displayFormat="MMM dd, YYYY" showValueStateMessage="false"
+												valueState="{= ${AdminApp>DateFrom} !== null ? 'None' : 'Error'}" editable="{= ${AdminApp>_editmode} === true}" change="_setDateFrom"/>
+										</template>
+									</Column>
+									<Column filterProperty="DateTo" sortProperty="DateTo" width="15%">
+										<m:Label text="End Date"/>
+										<template>
+											<m:DatePicker value="{path:'AdminApp>DateTo', formatter:'.formatter.formatDate'}" displayFormat="MMM dd, YYYY" showValueStateMessage="false"
+												valueState="{= ${AdminApp>DateTo} !== null ? 'None' : 'Error'}" editable="{= ${AdminApp>_editmode} === true}" change="_setDateTo"/>
+										</template>
+									</Column>
+									<Column filterProperty="ShowInOneDashboard" sortProperty="ShowInOneDashboard" width="10%">
+										<m:Label text="Show In One Dashboard"/>
+										<template>
+											<m:Switch state="{AdminApp>ShowInOneDashboard}" enabled="{= ${AdminApp>_editmode} === true}"/>
+										</template>
+									</Column>
+								</columns>
+							</Table>
+						</f:content>
+					</f:DynamicPage>
+				</m:content>
+			</m:Page>
+		</m:pages>
+	</m:App>
+</mvc:View>

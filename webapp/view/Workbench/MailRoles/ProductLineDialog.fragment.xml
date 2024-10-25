@@ -1,0 +1,7 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core"
+	controllerName="mcc.workbench.admin.settings.controller.Workbench.MailRoles.List">
+	<SelectDialog title="Select Product Line" contentWidth="450px" titleAlignment="Center" confirm="addProductLine" cancel="addProductLine"
+		items="{path: 'ProductLines>/'}" showClearButton="true" search="filterProductLine" rememberSelections="true">
+		<StandardListItem iconDensityAware="false" title="{ProductLines>LineName}" description="{ProductLines>LineID}"/>
+	</SelectDialog>
+</core:FragmentDefinition>

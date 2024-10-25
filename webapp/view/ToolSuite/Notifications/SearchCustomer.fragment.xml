@@ -1,0 +1,39 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:tnt="sap.tnt"
+	controllerName="mcc.workbench.admin.settings.controller.ToolSuite.Notification.NotificationDedicatedUsers">
+	<Dialog title="Search Customer" contentWidth="80%">
+		<content>
+		<SearchField id="searchFieldCustomer" value="{searchContent>/Value}" enableSuggestions="true" search="onSearch"  placeholder="Search for a Customer"
+				class="sapUiTinyMarginTopBottom">
+				<suggestionItems>
+					<SuggestionItem text="{suggestion>Name}" description="{suggestion>Description}"/>
+				</suggestionItems>
+			</SearchField>
+		
+		<Table id="idCustomer" growing="true" growingScrollToLoad="true" mode="None" autoPopinMode="true"
+							items="{path: 'searchResult>/Customer/results'}" noDataText="{i18n>noData}">
+		
+							<columns>
+								<Column importance="High"><Text text="Customer Name"/></Column>
+								<Column importance="Low" width="10rem" hAlign="Center"><Text text=""/></Column>
+								<Column importance="Low" width="10rem" hAlign="Center"><Text text=""/></Column>
+							</columns>
+							<items>
+								<ColumnListItem press="handleRowPress" type="Navigation">
+									<cells>
+										<VBox alignItems="Start">
+											<Text text="{searchResult>CustomerName} (BP: {path:'searchResult>Partner',formatter:'.formatter.trimPreZeros'}, ERP: {path:'searchResult>CustomerNo',formatter:'.formatter.trimPreZeros'}, GU: {path:'searchResult>Global_Ultimate_No',formatter:'.formatter.trimPreZeros'})" class="sapUiSmallMarginTop" textAlign="Center"/>
+										</VBox>
+										
+										<tnt:InfoLabel width="225px" text="Top Match" colorScheme="2" visible="{searchResult>isTopMatch}"/>
+										<tnt:InfoLabel width="190px" text='{searchResult>filterProp}' colorScheme="{= ${searchResult>IsGlobalUltimate} ? 1 : 5}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+		
+		</content>
+		<endButton>
+			<Button text="Cancel" press="onCancel"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

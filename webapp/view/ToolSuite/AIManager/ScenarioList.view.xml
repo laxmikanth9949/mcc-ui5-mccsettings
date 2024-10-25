@@ -1,0 +1,48 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:m="sap.m" xmlns:f="sap.f" xmlns="sap.ui.table"
+	controllerName="mcc.workbench.admin.settings.controller.ToolSuite.AIManager.AIManager">
+	<m:Page title="MCC AIManager" navButtonPress="onNavBack" showNavButton="true">
+		<f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false" fitContent="false">
+			<f:content>
+				<m:VBox>
+					<Table id="scenarioTable" selectionMode="None"
+						rows="{path: 'MCCAIManagerService>/AIManagerScenario', parameters: {   $$operationMode : 'Server'}}"
+						visibleRowCountMode="Interactive" 
+						ariaLabelledBy="title" rowActionCount="2">
+						<rowActionTemplate>
+							<RowAction>
+								<items>
+									<RowActionItem type="Navigation" press="onNavigate" />
+									<RowActionItem type="Custom" icon="sap-icon://delete"
+										press="secondActionPressed" />
+								</items>
+							</RowAction>
+						</rowActionTemplate>
+						<extension>
+							<m:OverflowToolbar>
+								<m:ToolbarSpacer />
+								<m:Button icon="sap-icon://add" type="Emphasized" press="onCreate"
+									tooltip="Create new scenario" />
+							</m:OverflowToolbar>
+						</extension>
+						<Column filterProperty="ID" sortProperty="ID" width="20%">
+							<m:Label text="ScenarioID" />
+							<template>
+								<m:Text text="{MCCAIManagerService>ID}"
+									tooltip="{MCCAIManagerService>ID}" />
+							</template>
+						</Column>
+						<Column filterProperty="Description" sortProperty="Description"
+							width="30%">
+							<label>
+								<m:Label text="Description" />
+							</label>
+							<template>
+								<m:Text text="{MCCAIManagerService>Description}" />
+							</template>
+						</Column>
+					</Table>
+				</m:VBox>
+			</f:content>
+		</f:DynamicPage>
+	</m:Page>
+</mvc:View>

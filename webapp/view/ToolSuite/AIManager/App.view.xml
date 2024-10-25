@@ -1,0 +1,17 @@
+<mvc:View displayBlock="true"
+    controllerName="mcc.workbench.admin.settings.controller.ToolSuite.AIManager.AIManager"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:form="sap.ui.layout.form">
+    <App>
+        <f:FlexibleColumnLayout id="flexibleColumnLayout" backgroundDesign="Solid">
+            <f:beginColumnPages>
+                <mvc:XMLView id="beginView"
+                    viewName="mcc.workbench.admin.settings.view.ToolSuite.AIManager.ScenarioList" />
+            </f:beginColumnPages>
+            <f:midColumnPages>
+                <mvc:XMLView id="midView"
+                    viewName="mcc.workbench.admin.settings.view.ToolSuite.AIManager.Detail" />
+            </f:midColumnPages>
+        </f:FlexibleColumnLayout>
+    </App>
+</mvc:View>

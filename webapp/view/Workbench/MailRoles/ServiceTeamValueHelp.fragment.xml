@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog title="{i18n>serviceTeam}" items="{path: 'serviceTeamDropDownValues>/'}" search="_handleValueHelpSearch" contentWidth="450px" titleAlignment="Center"
+		confirm="_handleValueHelpClose" cancel="_handleValueHelpClose">
+		<StandardListItem iconDensityAware="false" title="{serviceTeamDropDownValues>DropdownValue}" description="{path: 'serviceTeamDropDownValues>DropdownKey', formatter: '.formatter.formatServiceTeamKey'}"/>
+	</SelectDialog>
+</core:FragmentDefinition>

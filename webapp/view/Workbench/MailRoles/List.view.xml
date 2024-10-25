@@ -1,0 +1,239 @@
+<mvc:View controllerName="mcc.workbench.admin.settings.controller.Workbench.MailRoles.List" xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f"
+	xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core" xmlns:m="sap.m" xmlns="sap.ui.table" xmlns:semantic="sap.m.semantic">
+	<m:App>
+		<m:pages>
+			<m:Page title="{i18n>pageTitleWorkbenchMailRoles}" navButtonPress="onNavBack" showNavButton="true">
+				<m:content>
+					<f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false">
+						<!-- DynamicPage Content -->
+						<f:content>
+							<Table id="table" selectionMode="None" visibleRowCountMode="Auto" fixedColumnCount="1"
+								rows="{ path: 'MailRoles>/', sorter: { path: 'RoleName', descending: false }}" ariaLabelledBy="title" rowActionCount="2">
+								<rowActionTemplate>
+									<RowAction>
+										<items>
+											<RowActionItem type="Custom" icon="{= ${MailRoles>_editmode} ? 'sap-icon://save' : 'sap-icon://edit'}" press="firstActionPressed"/>
+											<RowActionItem type="Custom" icon="{= ${MailRoles>_editmode} ? 'sap-icon://decline' : 'sap-icon://delete'}" press="secondActionPressed"/>
+										</items>
+									</RowAction>
+								</rowActionTemplate>
+								<extension>
+									<m:OverflowToolbar>
+										<m:Title id="title" text="{masterView>/title}"/>
+										<m:ToolbarSpacer/>
+										<m:MultiComboBox
+											items="{ path: 'EmailTemplates>/', filters: [{ path : 'profile', operator : 'NE', value1 : ''}], sorter: { path: 'profile', descending: false, group : true } }"
+											width="25rem" placeholder="{i18n>filterMailTemplates}" selectionFinish="onFilterTemplates">
+											<core:Item key="{EmailTemplates>TemplateName}" text="{EmailTemplates>TemplateDescription}"/>
+										</m:MultiComboBox>
+										<m:SearchField search="onSearch" width="25rem"/>
+										<m:Button icon="sap-icon://excel-attachment" type="Transparent" press="onExcelExport" enabled="{= ${MailRoles>/}.length > 0}"/>
+										<m:Button id="btnAddRole" icon="sap-icon://add" type="Emphasized" press="onCreate" tooltip="Create new mail role"/>
+									</m:OverflowToolbar>
+								</extension>
+								<columns>
+									<Column filterProperty="RoleName" sortProperty="RoleName" width="18rem">
+										<m:Label text="{i18n>roleName}"/>
+										<template>
+											<m:Input value="{MailRoles>RoleName}" tooltip="{MailRoles>RoleName}" editable="{MailRoles>_editmode}"
+												valueState="{= ${MailRoles>RoleName} !== '' ? 'None' : 'Error'}"/>
+										</template>
+									</Column>
+									<Column filterProperty="UserName" sortProperty="UserName" width="12rem">
+										<m:Label text="Name (Optional, no DLs)"/>
+										<template>
+											<m:Input value="{MailRoles>UserName}" tooltip="{MailRoles>UserName}" editable="{MailRoles>_editmode}"/>
+										</template>
+									</Column>
+									<Column filterProperty="Recipients" sortProperty="Recipients" width="19rem">
+										<m:Label text="{i18n>recipients}"/>
+										<template>
+											<m:Input value="{MailRoles>Recipients}" tooltip="{MailRoles>Recipients}" editable="{MailRoles>_editmode}"
+												valueState="{= ${MailRoles>Recipients} !== '' ? 'None' : 'Error'}"/>
+										</template>
+									</Column>
+									<Column filterProperty="RoleType" sortProperty="RoleType" width="12rem">
+										<menu>
+											<u:Menu>
+												<u:items>
+													<u:MenuItem text="Sort Ascending" select="onSort" icon="sap-icon://sort-ascending"/>
+													<u:MenuItem text="Sort Descending" select="onSort" icon="sap-icon://sort-descending"/>
+													<u:MenuTextFieldItem label="Filter" select="onFilter" icon="sap-icon://filter"/>
+												</u:items>
+											</u:Menu>
+										</menu>
+										<m:Label text="{i18n>roleType}"/>
+										<template>
+											<m:ComboBox width="100%" selectedKey="{MailRoles>RoleType}" items="{path: 'oValueHelp>/RoleTypes', templateShareable:true}"
+												editable="{MailRoles>_editmode}" valueState="{= ${MailRoles>RoleType} !== '' ? 'None' : 'Error'}" selectionChange="onRoleTypeChange">
+												<core:Item key="{oValueHelp>key}" text="{oValueHelp>value}"/>
+											</m:ComboBox>
+										</template>
+									</Column>
+									<Column filterProperty="Position" sortProperty="Position" width="6rem"
+										tooltip="With the help of numbers it is possible to influence the order in which the mail addresses are added to the mail templates. The entry with the smallest number will be displayed first.">
+										<m:Label text="{i18n>position}"/>
+										<template>
+											<m:Input value="{MailRoles>Position}" editable="{MailRoles>_editmode}" type="Number"
+												tooltip="With the help of numbers it is possible to influence the order in which the mail addresses are added to the mail templates. The entry with the smallest number will be displayed first."/>
+										</template>
+									</Column>
+									<Column filterProperty="EngagementType" sortProperty="EngagementType" width="12rem">
+										<m:Label text="{i18n>EngagementType}"/>
+										<template>
+											<m:ComboBox width="100%" selectedKey="{MailRoles>EngagementType}"
+												items="{path: 'EngagementTypeDropDownValues>/', sorter: { path: 'DropdownName', descending: false, group : true }, templateShareable:true}"
+												editable="{MailRoles>_editmode}" valueState="{masterView>/Enga_ValueState}"
+												visible="{= ${MailRoles>RoleType} === 'ENGA' || ${MailRoles>RoleType} === 'ENGAR'}" selectionChange="onEngagementTypeChange">
+												<core:Item key="{EngagementTypeDropDownValues>DropdownKey}" text="{EngagementTypeDropDownValues>DropdownValue}"/>
+											</m:ComboBox>
+										</template>
+									</Column>
+									<Column filterProperty="Customer" sortProperty="Customer" width="12rem"
+										tooltip="Please enter the customer ERP number without leading zeros.">
+										<m:Label text="{i18n>customer}"/>
+										<template>
+											<m:Input visible="{= ${MailRoles>RoleType} === 'C'}" value="{MailRoles>Customer}" editable="{MailRoles>_editmode}"
+												valueState="{masterView>/CustomerFieldsValueState}" change="onCustomerChange"
+												tooltip="Please enter the customer ERP number without leading zeros."/>
+										</template>
+									</Column>
+									<Column filterProperty="ServiceTeam" sortProperty="ServiceTeam" width="15rem">
+										<m:Label text="{i18n>serviceTeam}"/>
+										<template>
+											<m:Input visible="{= ${MailRoles>RoleType} === 'ST'}" value="{parts:[{path: 'MailRoles>ServiceTeam'},{path: 'serviceTeamDropDownValues>/'}], formatter: '.formatter.formatServiceTeamID'}" tooltip="{MailRoles>ServiceTeam}"
+												editable="{MailRoles>_editmode}" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onServiceTeamPressed"
+												valueState="{masterView>/Service_TeamFieldsValueState}"/>
+										</template>
+									</Column>
+									<Column filterProperty="MCCTag" sortProperty="MCCTag" width="7rem">
+										<m:Label text="{i18n>mccTag}"/>
+										<template>
+											<m:Input value="{MailRoles>MCCTag}" visible="{= ${MailRoles>RoleType} === 'Tag'}" tooltip="{MailRoles>MCCTag}"
+												editable="{MailRoles>_editmode}" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onMCCTagPressed"
+												valueState="{masterView>/MCCTag_ValueState}"/>
+										</template>
+									</Column>
+									<Column filterProperty="SolutionArea" sortProperty="SolutionArea" width="10rem">
+										<m:Label text="{i18n>solutionArea}"/>
+										<template>
+											<m:ComboBox width="100%" visible="{= (${MailRoles>RoleType} === 'PR' || ${MailRoles>RoleType} === 'P')}"
+												selectedKey="{MailRoles>SolutionArea}" items="{path: '/SolutionAreaValueHelp', templateShareable:true}" editable="{MailRoles>_editmode}"
+												valueState="{masterView>/ProductFieldsValueState}" change="onSolutionAreaChange">
+												<core:Item key="{SolutionArea}" text="{SolutionArea}"/>
+											</m:ComboBox>
+										</template>
+									</Column>
+									<Column filterProperty="ProductLine" sortProperty="ProductLine" width="15rem" tooltip="Please enter the Product Line ID">
+										<m:Label text="{i18n>ProductLine}"/>
+										<template>
+											<m:Input value="{parts:[{path:'MailRoles>ProductLine'},{path:'ProductLines>/'}], formatter: '.formatter.formatLineID'}"
+												editable="{MailRoles>_editmode}" visible="{= (${MailRoles>RoleType} === 'PR' || ${MailRoles>RoleType} === 'P')}"
+												valueState="{masterView>/ProductFieldsValueState}" tooltip="Please enter the ProductLine ID." change="onSolutionAreaChange"
+												valueHelpOnly="true" showValueHelp="true" valueHelpRequest="openProductLineDialog"/>
+										</template>
+									</Column>
+									<Column filterProperty="Product" sortProperty="Product" width="15rem" tooltip="Please enter the Product ID.">
+										<m:Label text="{i18n>Product}"/>
+										<template>
+											<m:Input value="{parts:[{path:'MailRoles>Product'},{path:'AllProducts>/'}], formatter: '.formatter.formatProductID'}"
+												editable="{MailRoles>_editmode}" visible="{= (${MailRoles>RoleType} === 'PR' || ${MailRoles>RoleType} === 'P')}"
+												tooltip="Please enter the Product ID." valueState="{masterView>/ProductFieldsValueState}" change="onSolutionAreaChange" valueHelpOnly="true"
+												showValueHelp="true" valueHelpRequest="openProductDialog"/>
+										</template>
+									</Column>
+									<Column filterProperty="country" sortProperty="country" width="12rem">
+										<m:Label text="{i18n>country}"/>
+										<template>
+											<m:FlexBox>
+												<m:Input value="{MailRoles>country}"
+													visible="{= (${MailRoles>RoleType} === 'PR' || ${MailRoles>RoleType} === 'R'|| ${MailRoles>RoleType} === 'ENGAR') &amp;&amp; ${MailRoles>_editmode} === false}"
+													width="100%" editable="false"/>
+												<m:Input showSuggestion="true" filterSuggests="false" startSuggestion="1" width="100%" showValueHelp="false"
+													visible="{= (${MailRoles>RoleType} === 'PR' || ${MailRoles>RoleType} === 'R'|| ${MailRoles>RoleType} === 'ENGAR') &amp;&amp; ${MailRoles>_editmode}}"
+													suggest="onSuggestCountry" valueState="{masterView>/RegionalFieldsValueState}" valueStateText="No country selected"
+													suggestionItems="{ path: 'RegionHelpFiltered>/',templateShareable:true }" selectedKey="{MailRoles>country}" change="onRegionalFieldChange">
+													<m:suggestionItems>
+														<core:Item key="{RegionHelpFiltered>country}" text="{RegionHelpFiltered>country}"/>
+													</m:suggestionItems>
+												</m:Input>
+											</m:FlexBox>
+										</template>
+									</Column>
+									<Column filterProperty="region" sortProperty="region" width="9.5rem">
+										<m:Label text="{i18n>region}"/>
+										<template>
+											<m:ComboBox width="100%" selectedKey="{MailRoles>region}" items="{path: '/RegionValueHelp', templateShareable:true}"
+												visible="{= ${MailRoles>RoleType} === 'R' || ${MailRoles>RoleType} === 'PR'|| ${MailRoles>RoleType} === 'ENGAR'}"
+												editable="{MailRoles>_editmode}" valueState="{masterView>/RegionalFieldsValueState}" change="onRegionalFieldChange">
+												<core:Item key="{region}" text="{region}"/>
+											</m:ComboBox>
+										</template>
+									</Column>
+									<Column filterProperty="subregion" sortProperty="subregion" width="9.5rem">
+										<m:Label text="{i18n>subRegion}" wrapping="true" wrappingType="Hyphenated"/>
+										<template>
+											<m:ComboBox width="100%" selectedKey="{MailRoles>subregion}" items="{path: '/subregionValueHelp', templateShareable:true}"
+												visible="{= ${MailRoles>RoleType} === 'R' || ${MailRoles>RoleType} === 'PR'|| ${MailRoles>RoleType} === 'ENGAR'}"
+												editable="{MailRoles>_editmode}" valueState="{masterView>/RegionalFieldsValueState}" change="onRegionalFieldChange">
+												<core:Item key="{subregion}" text="{subregion}"/>
+											</m:ComboBox>
+										</template>
+									</Column>
+									<Column filterProperty="subsubregion" sortProperty="subsubregion" width="9.5rem">
+										<m:Label text="{i18n>subsubRegion}" wrapping="true" wrappingType="Hyphenated"/>
+										<template>
+											<m:ComboBox width="100%" selectedKey="{MailRoles>subsubregion}" items="{path: '/subsubregionValueHelp', templateShareable:true}"
+												visible="{= ${MailRoles>RoleType} === 'R' || ${MailRoles>RoleType} === 'PR'|| ${MailRoles>RoleType} === 'ENGAR'}"
+												editable="{MailRoles>_editmode}" valueState="{masterView>/RegionalFieldsValueState}" change="onRegionalFieldChange">
+												<core:Item key="{subsubregion}" text="{subsubregion}"/>
+											</m:ComboBox>
+										</template>
+									</Column>
+									<Column filterProperty="subsubsubregion" sortProperty="subsubsubregion" width="9.5rem">
+										<m:Label text="{i18n>subsubsubRegion}" wrapping="true" wrappingType="Hyphenated"/>
+										<template>
+											<m:ComboBox width="100%" selectedKey="{MailRoles>subsubsubregion}" items="{path: '/subsubsubregionValueHelp', templateShareable:true}"
+												visible="{= ${MailRoles>RoleType} === 'R' || ${MailRoles>RoleType} === 'PR'|| ${MailRoles>RoleType} === 'ENGAR'}"
+												editable="{MailRoles>_editmode}" valueState="{masterView>/RegionalFieldsValueState}" change="onRegionalFieldChange">
+												<core:Item key="{subsubsubregion}" text="{subsubsubregion}"/>
+											</m:ComboBox>
+										</template>
+									</Column>
+									<Column width="5.5rem" hAlign="Center">
+										<m:Label text="{i18n>ToOrCC}" wrapping="true"/>
+										<template>
+											<m:Switch enabled="{MailRoles>_editmode}" state="{MailRoles>_toCC}" customTextOn="To" customTextOff="CC"/>
+										</template>
+									</Column>
+									<Column width="5rem" hAlign="Center">
+										<menu>
+											<u:Menu>
+												<u:items>
+													<u:MenuTextFieldItem label="Filter" select="onFilterTemplates" icon="sap-icon://filter"/>
+												</u:items>
+											</u:Menu>
+										</menu>
+										<m:Label text="{i18n>detailLineItemTableHeading}" wrapping="true"/>
+										<template>
+											<m:Button icon="sap-icon://value-help" text="{= ${MailRoles>_editmode} ? '' : ${MailRoles>MailTemplates/results}.length}"
+												type="{= ${MailRoles>_editmode} ? 'Transparent' : 'Default'}" press="onValueHelpPressed"/>
+										</template>
+									</Column>
+									<Column filterProperty="modifiedBy" sortProperty="modifiedBy" width="10rem">
+										<m:Label text="{i18n>modifiedBy}"/>
+										<template>
+											<m:Button icon="sap-icon://value-help" text="{MailRoles>modifiedBy}" type="Default" press="onChangeLogPressed"
+												visible="{= ${MailRoles>modifiedBy} !== null &amp;&amp; ${MailRoles>modifiedBy} !== undefined}"/>
+										</template>
+										<!--	enabled="{= ${MailRoles>Changelogs} !== undefined &amp;&amp; ${MailRoles>Changelogs/results}.length > 0}"-->
+									</Column>
+								</columns>
+							</Table>
+						</f:content>
+					</f:DynamicPage>
+				</m:content>
+			</m:Page>
+		</m:pages>
+	</m:App>
+</mvc:View>

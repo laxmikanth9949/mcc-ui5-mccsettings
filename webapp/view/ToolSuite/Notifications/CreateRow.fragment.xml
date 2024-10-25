@@ -1,0 +1,46 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+	controllerName="mcc.workbench.admin.settings.controller.ToolSuite.Notification.NotificationDedicatedUsers">
+	<Dialog title="Create Notification Settings" contentWidth="60%">
+		<content>
+			<form:SimpleForm layout="ResponsiveGridLayout" labelSpanS="4" labelSpanM="4" labelSpanL="4" labelSpanXL="4" editable="true"
+				class="sapUiContentPadding">
+				<Label text="Select Notification Type" required="true"/>
+				<Select width="100%" id="NotificationTypeSelect" forceSelection="false" change="onTypeChange"  
+						class="sapUiSmallMarginBottom" items="{ path: 'MCCToolSuite>/NotificationTypesValueHelpProcessNotification'}">
+				<core:Item key="{MCCToolSuite>NotificationType}" text="{MCCToolSuite>NotificationType}" />
+				</Select>
+			 	<Label text="Filter on Service Team" />
+				<MultiComboBox width="100%"  id="ServiceTeams_ComboBox" visible ="false"
+						class="sapUiSmallMarginBottom" items="{ path: '/DropdownValues', sorter: [{path: 'DropdownValue'}], filters:[ {path: 'DropdownName', operator: 'EQ', value1: 'IssueDetails-ServiceTeam-Dropdown'}]}">
+				<core:Item key="{DropdownValue} ({DropdownKey})" text="{DropdownValue} ({DropdownKey})" />
+				</MultiComboBox> 
+					<Label text="Filter on" />
+				<SegmentedButton width="20rem" id="segmentedButtonCustomer" selectedKey="ERP" visible="false" select="onSegmentedButtonChange">
+					<items>
+						<SegmentedButtonItem text="ErpNo" key="ERP" />
+						<SegmentedButtonItem text="Global Ultimate" key="GU" />
+					</items>
+				</SegmentedButton>	
+				<Label text="Filter on Customer Account" id="labelCustomerFilter" />
+				<FlexBox  id="FlexBoxCustomer" visible="false" renderType="Bare">
+				<Input id="InputCustomer"  editable="false" >
+					<layoutData>
+						<FlexItemData growFactor="5" />
+					</layoutData>
+					</Input>
+				<Button class="sapUiTinyMarginBegin" width="3rem" icon="sap-icon://add" press="onValueHelpPress"/>
+				<Button class="sapUiTinyMarginBegin" width="3rem" icon="sap-icon://reset" press="onResetCustomer"/>
+				</FlexBox>
+			
+			</form:SimpleForm>
+
+		
+		</content>
+		<beginButton>
+			<Button text="Create" id="createButton" type="Emphasized" press="onCreate" enabled="false" />
+		</beginButton>
+		<endButton>
+			<Button text="Cancel" press="onCancel"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

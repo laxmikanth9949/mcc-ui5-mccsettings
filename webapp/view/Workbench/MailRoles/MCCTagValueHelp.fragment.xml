@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog title="{i18n>mccTag}" items="{path: '/MCCTags'}" search="_handleTagSearch" contentWidth="450px" titleAlignment="Center"
+		confirm="_handleTagClose" cancel="_handleTagClose">
+		<StandardListItem iconDensityAware="false" title="{Name}" description="{Description}"/>
+	</SelectDialog>
+</core:FragmentDefinition>

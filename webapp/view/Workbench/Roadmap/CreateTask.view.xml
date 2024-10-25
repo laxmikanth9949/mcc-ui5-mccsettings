@@ -1,0 +1,122 @@
+<mvc:View controllerName="mcc.workbench.admin.settings.controller.Workbench.Roadmap.CreateTask" xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:sapit="sapit.controls" xmlns:semantic="sap.m.semantic" xmlns:smart="sap.ui.comp.smartfield" xmlns="sap.m">
+	<semantic:DetailPage id="page" navButtonPress="onNavBack" busy="{viewModel>/busy}">
+		<semantic:content>
+			<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="3" emptySpanM="3" id="newEntitySimpleForm"
+				labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+				title="{= ${viewModel>/mode} === 'edit'? 'Edit Tasks': 'New Task'}">
+				<f:content>
+					<Label text="Task Name" required="true"/>
+					<Input value="{AdminApp>TaskName}" valueLiveUpdate="true" liveChange="_validateSaveEnablement"
+						valueState="{= ${AdminApp>TaskName}.length === 0 ? 'Error' : 'None'}"/>
+					<Label text="Task Type"/>
+					<Select width="100%" id="task_type" forceSelection="true" selectedKey="{AdminApp>TaskType}" class="sapUiSmallMarginBottom"
+						items="{ path: 'viewModel>/TaskTypeDropdownValues'}" change="_validateSaveEnablement">
+						<core:Item key="{viewModel>Key}" text="{viewModel>Name}" enabled="{viewModel>visible}"/>
+					</Select>
+					<Label text="Category"/>
+					<Select width="100%" id="category" forceSelection="true" selectedKey="{path: 'AdminApp>CategoryID', type: 'sap.ui.model.odata.type.Int32'}"
+						class="sapUiSmallMarginBottom" items="{ path: 'viewModel>/CategoryDropdownValues'}" change="_validateSaveEnablement">
+						<core:Item key="{viewModel>Key}" text="{viewModel>Name}" enabled="{viewModel>visible}"/>
+					</Select>
+					<Label text="Importance"/>
+					<Switch state="{= ${AdminApp>Importance} === 'M'}" customTextOn="M" customTextOff="O" change="changeImportance"/>
+					<Label text="Region"/>
+					<Select width="100%" id="region" forceSelection="true" selectedKey="{path: 'AdminApp>Region', type: 'sap.ui.model.odata.type.Int32'}"
+						class="sapUiSmallMarginBottom" items="{ path: 'viewModel>/RegionDropdownValues'}" change="_validateSaveEnablement"
+						enabled="{= ${AdminApp>RoadmapProfileID}!=='mcc-gss'}">
+						<core:Item key="{viewModel>Key}" text="{viewModel>Name}" enabled="{viewModel>visible}"/>
+					</Select>
+					<Label text="Scenario"/>
+					<Select width="100%" id="scenario" forceSelection="true" selectedKey="{path: 'AdminApp>ScenarioID', type: 'sap.ui.model.odata.type.Int32'}"
+						class="sapUiSmallMarginBottom" items="{ path: 'viewModel>/ScenarioDropdownValues'}" change="_validateSaveEnablement"
+						enabled="{= ${AdminApp>RoadmapProfileID}!=='mcc-gss'}">
+						<core:Item key="{viewModel>Key}" text="{viewModel>Name}" enabled="{viewModel>visible}"/>
+					</Select>
+					<Label text="Position" required="true"/>
+					<Input value="{path: 'AdminApp>Position', type: 'sap.ui.model.odata.type.Int32'}" valueLiveUpdate="true"
+						liveChange="_validateSaveEnablement" type="Number" valueState="{= ${AdminApp>Position}.length === 0 ? 'Error' : 'None'}"/>
+					<Label text="Description"/>
+					<VBox id="markdownBox" class="markdownTextBorder">
+						<sapit:MarkdownEditor id="myMarkdownEditor" liveChange="_validateSaveEnablement"
+							toolbar='["heading" , "bold" , "italic" , "|" , "unordered-list" , "ordered-list" , "|" , "preview" , "|" , "guide" ]'
+							value="{AdminApp>Description}" placeholder="Start typing..." spellChecker="false" lineWrapping="true"/></VBox>
+					<Label text="Deprecated"/>
+					<CheckBox selected="{path:'AdminApp>Deprecated', type: 'sap.ui.model.odata.type.Boolean'}"/>
+				</f:content>
+			</f:SimpleForm>
+			<FlexBox justifyContent="Center" width="100%">
+				<Table id="linksTable" mode="Delete" delete="onDeleteTaskLink" width="{= (${device>/resize/width}*0.55) + 'px'}">
+					<headerToolbar>
+						<Toolbar id="lineItemsToolbar">
+							<Title text="Task Links" level="H5"/>
+							<ToolbarSpacer/>
+							<Button icon="sap-icon://add" press="onAddTaskLink"/>
+						</Toolbar>
+					</headerToolbar>
+					<columns>
+						<Column>
+							<Text text="Link Description"/>
+						</Column>
+						<Column>
+							<Text text="Link URL"/>
+						</Column>
+					</columns>
+				</Table>
+			</FlexBox>
+		</semantic:content>
+		<semantic:saveAction>
+			<semantic:SaveAction id="save" enabled="{viewModel>/enableCreate}" press="onSave"/>
+		</semantic:saveAction>
+		<semantic:cancelAction>
+			<semantic:CancelAction id="cancel" press="onCancel"></semantic:CancelAction>
+		</semantic:cancelAction>
+	</semantic:DetailPage>
+</mvc:View>
+<!--<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog title="{i18n>roadmapTasksEditTitle}">
+		<content>
+			<f:SimpleForm>
+				<f:content>
+					<VBox>
+						<Label text="Task Name" required="true"/>
+						<Input value="{TaskName}"/>
+						<Label text="Task Type" required="true"/>
+						<ComboBox selectedKey="{TaskType}">
+							<core:Item key="Document" text="Document"/>
+							<core:Item key="Mail" text="Document"/>
+							<core:Item key="URL" text="Document"/>
+							<core:Item key="Other" text="Document"/>
+								<core:Item key="Checkpoint" text="Checkpoint" visible="{}"/>
+						</ComboBox>
+						<Label text="Category" required="true"/>
+						<Label text="Importance" required="true"/>
+						<Label text="Region" required="true"/>
+						<Label text="Deprecated"/>
+						<Label text="Position" required="true"/>
+						<Label text="Description"/>
+						<Label text="Task Link URL"/>
+						<Label text="Task Link Description"/>
+						<Label text="Phase"/>
+						<ComboBox id="RoleID" enabled="true" visible="true" items="{/MailRoles}" width="80%">
+							<core:Item key="{RoleID}" text="{RoleName}"/>
+						</ComboBox>
+						<Label text="{i18n>toOrCC}?"/>
+						<Select name="TOorCC" id="TOorCC" enabled="true" visible="true" items="{oValueHelp>/TOorCC}">
+							<core:Item key="{oValueHelp>key}" text="{oValueHelp>value}"/>
+						</Select>
+						<Label text="{i18n>editable}?"/>
+						<Switch state="true" id="Editable" customTextOn="Yes" customTextOff="No"/>
+					</VBox>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<beginButton>
+			<Button text="Save" press=".onSaveTask" type="Emphasized"/>
+		</beginButton>
+		<endButton>
+			<Button text="Cancel" press=".onCancelCreate"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>-->

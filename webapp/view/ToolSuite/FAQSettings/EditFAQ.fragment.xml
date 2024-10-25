@@ -1,0 +1,49 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    controllerName="mcc.workbench.admin.settings.controller.ToolSuite.FAQSettings.CollectionDetails">
+    <Dialog title="Edit Document" contentWidth="70%" id="editDialog">
+        <content>
+            <form:SimpleForm
+                layout="ResponsiveGridLayout"
+                editable="true"
+                class="sapUiContentPadding">
+
+                <Label text="Title" />
+                <Input id="Title" value="{collectionsModel>metadata/title}" valueState="None" />
+
+                <Label text="Information" />
+                <TextArea id="Information" value="{collectionsModel>chunks/0/content}"
+                    growing="true" valueState="None" />
+
+                <Label text="Source link" />
+                <Input id="sourceLink" value="{collectionsModel>metadata/webUrl}" valueState="None" />
+
+                <Label text="Original Creation Date" />
+                <DatePicker id="originalCreationDate" value="{collectionsModel>metadata/timestamp}"
+                    valueState="None" />
+
+                <Label text="Created By" />
+                <Text id="createdBy" text="{collectionsModel>metadata/createdBy}" />
+
+                <Label text="Created At" />
+                <Text id="createdAt"
+                    text="{path: 'collectionsModel>metadata/createdAt', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy HH:mm:ss'}}" />
+
+                <Label text="Modified By" />
+                <Text id="modifiedBy" text="{collectionsModel>metadata/modifiedBy}" />
+
+                <Label text="Modified At" />
+                <Text id="modifiedAt"
+                    text="{path: 'collectionsModel>metadata/modifiedAt', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy HH:mm:ss'}}" />
+            </form:SimpleForm>
+        </content>
+        <beginButton>
+            <Button text="Save" press="_onSaveEdit" />
+        </beginButton>
+        <endButton>
+            <Button text="Cancel" press="_onCancel" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

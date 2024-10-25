@@ -1,0 +1,162 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:t="sap.ui.table" xmlns:viz="sap.viz.ui5.controls"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:viz.data="sap.viz.ui5.data"
+	controllerName="mcc.workbench.admin.settings.controller.ToolSuite.ErrorLog.Main" xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page title="{i18n>pageTitleToolSuiteErrorLog}" navButtonPress="onNavBack" navButtonTooltip="Home" showNavButton="true">
+				<subHeader>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<SegmentedButton selectedKey="chart" width="20%" selectionChange="onSelectionChange">
+							<items>
+								<SegmentedButtonItem text="Chart" key="chart"/>
+								<SegmentedButtonItem text="Table" key="table"/>
+							</items>
+						</SegmentedButton>
+						<ToolbarSpacer/>
+					</OverflowToolbar>
+				</subHeader>
+				<content>
+					<viz:Popover id="idPopOver"></viz:Popover>
+					<viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType='line'
+						vizProperties="{ title: { text: 'Error count last 30 days' }, valueAxis: { title: {visible: false }}, categoryAxis: { title: {visible: false }} }">
+						<viz:dataset>
+							<viz.data:FlattenedDataset data="{MCCToolSuite>/ErrorLogCountMCCToolSuite}">
+								<viz.data:dimensions>
+									<viz.data:DimensionDefinition name="Day" value="{path: 'dateobject', formatter: '.formatDate'}"/>
+								</viz.data:dimensions>
+								<viz.data:measures>
+									<viz.data:MeasureDefinition name="MCCScheduler" value="{MCCScheduler}"/>
+									<viz.data:MeasureDefinition name="MCCQualityChecker" value="{MCCQualityChecker}"/>
+									<viz.data:MeasureDefinition name="MDRDashboards" value="{MDRDashboards}"/>
+									<viz.data:MeasureDefinition name="MCCSOSApp" value="{MCCSOSApp}"/>
+									<viz.data:MeasureDefinition name="MCCWorkplace" value="{MCCWorkplace}"/>
+									<viz.data:MeasureDefinition name="MCCWorkforcePlanner" value="{MCCWorkforcePlanner}"/>
+									<viz.data:MeasureDefinition name="MCCOneDashboard" value="{MCCOneDashboard}"/>
+									<viz.data:MeasureDefinition name="MCCAssistant" value="{MCCAssistant}"/>
+									<viz.data:MeasureDefinition name="MCCTestApp" value="{MCCTestApp}"/>
+									<viz.data:MeasureDefinition name="MCCSettingsApp" value="{MCCSettingsApp}"/>
+									<viz.data:MeasureDefinition name="MISC" value="{MISC}"/>
+									<viz.data:MeasureDefinition name="Test" value="{Test}"/>
+									<viz.data:MeasureDefinition name="MCCWorkbench" value="{MCCWorkbench}"/>
+									<viz.data:MeasureDefinition name="MCCAuthorizationHelper" value="{MCCAuthorizationHelper}"/>
+								</viz.data:measures>
+							</viz.data:FlattenedDataset>
+						</viz:dataset>
+						<viz:feeds>
+							<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="MCCScheduler"/>
+							<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="MCCQualityChecker"/>
+							<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="MDRDashboards"/>
+							<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="MCCSOSApp"/>
+							<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="MCCWorkplace"/>
+							<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="MCCWorkforcePlanner"/>
+							<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="MCCOneDashboard"/>
+							<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="MCCAssistant"/>
+							<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="MCCTestApp"/>
+							<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="MCCSettingsApp"/>
+							<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="MISC"/>
+							<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Test"/>
+							<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="MCCWorkbench"/>
+							<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="MCCAuthorizationHelper"/>
+							<viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="Day"/>
+						</viz:feeds>
+					</viz:VizFrame>
+					<t:Table id="ErrorLogTable" visible="false" selectionMode="MultiToggle" enableCellFilter="true" visibleRowCount="20"
+						alternateRowColors="true" showColumnVisibilityMenu="true"
+						rows="{path: 'MCCToolSuite>/ErrorLogs' ,sorter: {path: 'createdAt', descending: true }, 
+						
+						 filters: [
+    {
+   filters: [{ path: 'ErrorStatusCode', operator: 'NE', value1: '401' },
+            { path: 'ErrorStatusCode', operator: 'NE', value1: '403'} ],
+      and: true
+    }
+  ]
+						
+						}" cellClick="onCellClick">
+						<t:extension>
+							<OverflowToolbar>
+								<ToolbarSpacer/>
+								<Label text="Hide 401/403 Errors"/>
+								<CheckBox id="checkboxErrors" selected="true" select="onPressHide"/>
+								<Button text="Invalidate APIM Cache" press="invalidateApimCache"/>
+								<Button icon="sap-icon://delete" press="onDelete"/>
+							</OverflowToolbar>
+						</t:extension>
+						<t:columns>
+							<!--The "name" property of Column is equal to the field naming on the OData service the data is coming from-->
+							<t:Column width="11rem" filterProperty="ID" visible="false" sortProperty="ID" name="ID">
+								<!--The "text" property defines the name of the column visible in the UI-->
+								<!--Currently the "name" and "text" property have the same value-->
+								<Label text="{i18n>id}"/>
+								<t:template>
+									<Text text="{MCCToolSuite>ID}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="10rem" filterProperty="ApplicationID" sortProperty="ApplicationID" name="ApplicationID">
+								<Label text="{i18n>ApplicationID}"/>
+								<t:template>
+									<Text text="{MCCToolSuite>ApplicationID}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="6rem" filterProperty="Method" sortProperty="Method" name="Method">
+								<Label text="{i18n>Method}"/>
+								<t:template>
+									<Text text="{MCCToolSuite>Method}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="20rem" filterProperty="RequestURL" sortProperty="RequestURL" name="RequestURL">
+								<Label text="{i18n>RequestURL}"/>
+								<t:template>
+									<Text text="{MCCToolSuite>RequestURL}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem" filterProperty="Service" sortProperty="Service" name="Service">
+								<Label text="{i18n>oDataService}"/>
+								<t:template>
+									<Text text="{MCCToolSuite>Service}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="30rem" filterProperty="ErrorMessage" sortProperty="ErrorMessage" name="ErrorMessage">
+								<Label text="{i18n>ErrorMessage}"/>
+								<t:template>
+									<Text text="{MCCToolSuite>ErrorMessage}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="6rem" filterProperty="ErrorStatusCode" sortProperty="ErrorStatusCode" name="ErrorStatusCode">
+								<Label text="{i18n>ErrorStatusCode}"/>
+								<t:template>
+									<Text text="{MCCToolSuite>ErrorStatusCode}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="20rem" filterProperty="Request" sortProperty="Request" name="Request">
+								<Label text="{i18n>RequestBody}"/>
+								<t:template>
+									<Text text="{MCCToolSuite>Request}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="20rem" filterProperty="UserID" sortProperty="UserID" name="UserID">
+								<Label text="{i18n>UserID}"/>
+								<t:template>
+									<Text text="{MCCToolSuite>UserID}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="13rem" sortProperty="createdAt" sorted="true" sortOrder="Descending" name="createdAt">
+								<Label text="{i18n>createdAt}"/>
+								<t:template>
+									<Text text="{MCCToolSuite>createdAt}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="6rem" filterProperty="createdBy" sortProperty="createdBy" name="createdBy">
+								<Label text="{i18n>createdBy}"/>
+								<t:template>
+									<Text text="{MCCToolSuite>createdBy}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+						</t:columns>
+					</t:Table>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

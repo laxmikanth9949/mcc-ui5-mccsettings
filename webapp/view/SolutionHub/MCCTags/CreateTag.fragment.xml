@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+	controllerName="mcc.workbench.admin.settings.controller.SolutionHub.MCCTags.TagList">
+	<Dialog title="Create New Tag" contentWidth="600px">
+		<content>
+			<form:SimpleForm layout="ResponsiveGridLayout" labelSpanS="4" labelSpanM="4" labelSpanL="4" labelSpanXL="4" editable="true"
+				class="sapUiContentPadding">
+				<Label text="Tag Name"/>
+				<Input value="{AdminApp>Name}" valueState="{= ${AdminApp>Name} !== '' &amp;&amp; ${AdminApp>Name}.includes(' ') === false ? 'None' : 'Error'}"
+					valueStateText="Mandatory, no spaces allowed."/>
+				<Label text="Tag Title"/>
+				<Input value="{AdminApp>Title}" valueState="{= ${AdminApp>Title} !== '' ? 'None' : 'Error'}" valueStateText="Mandatory"/>
+				<Label text="Short Description"/>
+				<Input value="{AdminApp>Description}" valueState="{= ${AdminApp>Description} !== '' ? 'None' : 'Error'}" showValueStateMessage="false"/>
+				<Label text="Start Date"/>
+				<DatePicker id="dateFrom" value="{path:'AdminApp>DateFrom', formatter:'.formatter.formatDate'}" displayFormat="MMM dd, YYYY"
+					valueState="{= ${AdminApp>DateFrom} !== null ? 'None' : 'Error'}" change="_setDateFrom" showValueStateMessage="false"
+					valueStateText="Please select a date."/>
+				<Label text="End Date"/>
+				<DatePicker id="dateTo" value="{path:'AdminApp>DateTo', formatter:'.formatter.formatDate'}" displayFormat="MMM dd, YYYY"
+					valueState="{= ${AdminApp>DateTo} !== null ? 'None' : 'Error'}" change="_setDateTo" showValueStateMessage="false"
+					valueStateText="Please select a date."/>
+				<Label text="Show In One Dashboard"/>
+				<Switch state="{AdminApp>ShowInOneDashboard}"/>
+			</form:SimpleForm>
+		</content>
+		<beginButton>
+			<Button text="Create" press="_onCreate"/>
+		</beginButton>
+		<endButton>
+			<Button text="Cancel" press="_onCancel"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

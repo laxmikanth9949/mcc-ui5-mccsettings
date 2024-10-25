@@ -1,0 +1,10 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Popover class="sapUiContentPadding" placement="Top" title="Business Context" id="popoverHelp" titleAlignment="Center">
+		<FlexBox direction="Column" alignItems="Start">
+		<Label class="sapUiTinyMarginBottom" text="Notification Group Description:"/>
+		<Text class="sapUiMediumMarginBottom"  id="processDesc"></Text>
+		<Label class="sapUiTinyMarginBottom"  text="Notification Type Description:"/>
+		<Text id="typeDesc"></Text>
+		</FlexBox>
+	</Popover>
+</core:FragmentDefinition>

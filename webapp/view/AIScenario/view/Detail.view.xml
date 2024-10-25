@@ -1,0 +1,126 @@
+<mvc:View displayBlock="true"
+    controllerName="mcc.workbench.admin.settings.controller.AIScenario.Detail" height="100%"
+    xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:m="sap.m" xmlns:f="sap.f"
+    xmlns:chart="sap.suite.ui.microchart" xmlns:t="sap.ui.table" xmlns:form="sap.ui.layout.form"
+    xmlns="sap.uxap">
+    <ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true"
+        alwaysShowContentHeader="false" preserveHeaderStateOnScroll="false"
+        headerContentPinnable="true" isChildPage="true" upperCaseAnchorBar="false">
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <expandedHeading>
+                    <m:Title text="{local>/detailHeaderTitle}" wrapping="true"
+                        class="sapUiSmallMarginEnd" id="detailHeader" />
+                </expandedHeading>
+                <snappedHeading>
+                    <m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Center"
+                        class="sapUiTinyMarginToEnd">
+                        <m:Title text="{local>/detailHeaderTitle}" wrapping="true" />
+                    </m:FlexBox>
+                </snappedHeading>
+                <navigationActions>
+                    <m:OverflowToolbarButton type="Transparent" icon="sap-icon://decline"
+                        press="handleClose" tooltip="Close middle column" />
+                </navigationActions>
+                <actions>
+                    <m:Button text="{i18n>linkMCCAIManager}" type="Emphasized"
+                        tooltip="{i18n>tooltipLinkMCCAIManager}" press="navToAIManager" />
+                </actions>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
+        <headerContent />
+        <sections>
+            <ObjectPageSection title="{i18n>detailPageReviewSummarySection}">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <form:SimpleForm maxContainerCols="2" editable="false"
+                                layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12"
+                                emptySpanL="0" emptySpanM="0" columnsL="1" columnsM="1">
+                                <form:content>
+                                    <chart:ComparisonMicroChart scale="" class="sapUiSmallMargin"
+                                        press="press" shrinkable="true">
+                                        <chart:data>
+                                            <chart:ComparisonMicroChartData title="5 Stars"
+                                                value="{local>/aRatingsCount/5}" color="Good" />
+                                            <chart:ComparisonMicroChartData title="4 Stars"
+                                                value="{local>/aRatingsCount/4}" color="Good" />
+                                            <chart:ComparisonMicroChartData title="3 Stars"
+                                                value="{local>/aRatingsCount/3}" color="Good" />
+                                            <chart:ComparisonMicroChartData title="2 Stars"
+                                                value="{local>/aRatingsCount/2}" color="Critical" />
+                                            <chart:ComparisonMicroChartData title="1 Stars"
+                                                value="{local>/aRatingsCount/1}" color="Error" />
+                                        </chart:data>
+                                    </chart:ComparisonMicroChart>
+                                </form:content>
+                            </form:SimpleForm>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+
+            <ObjectPageSection title="{i18n>detailPageFeedbackSection}">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <t:Table id="feedbackTable" selectionMode="None"
+                                visibleRowCountMode="Fixed" selectionBehavior="RowSelector"
+                                enableSelectAll="false"
+                                rows="{path : 'MCCAIManagerService>toFeedback', parameters: {'$orderby': 'createdAt desc'}}">
+                                <t:toolbar>
+                                    <m:Toolbar>
+                                        <m:ToolbarSpacer />
+                                        <m:Button icon="sap-icon://sort" type="Transparent"
+                                            press="onSort" />
+                                    </m:Toolbar>
+                                </t:toolbar>
+                                <t:rowSettingsTemplate>
+                                    <t:RowSettings
+                                        highlight="{path: 'MCCAIManagerService>processed', formatter: '.formatRowSettings', targetType : 'any'}"
+                                        highlightText="" />
+                                </t:rowSettingsTemplate>
+                                <t:columns>
+                                    <t:Column sortProperty="createdAt" filterProperty="createdAt">
+                                        <t:label>
+                                            <m:Label text="Created" />
+                                        </t:label>
+                                        <t:template>
+                                            <m:Text text="{MCCAIManagerService>createdAt}" />
+                                        </t:template>
+                                    </t:Column>
+                                    <t:Column sortProperty="rating" filterProperty="rating">
+                                        <t:label>
+                                            <m:Label text="{i18n>detailColumnRating}" />
+                                        </t:label>
+                                        <t:template>
+                                            <m:RatingIndicator id="RI_S" maxValue="5"
+                                                visualMode="Half" class="sapUiSmallMarginBottom"
+                                                value="{MCCAIManagerService>rating}" iconSize="16px" />
+                                        </t:template>
+                                    </t:Column>
+                                    <t:Column>
+                                        <t:label>
+                                            <m:Label text="{i18n>detailColumnAddFeedback}" />
+                                        </t:label>
+                                        <t:template>
+                                            <m:Text text="{MCCAIManagerService>additionalFeedback}" />
+                                        </t:template>
+                                    </t:Column>
+                                    <t:Column width="2rem">
+                                        <t:template>
+                                            <m:FlexBox justifyContent="Center" alignItems="Center">
+                                                <m:Button icon="sap-icon://navigation-right-arrow"
+                                                    press="onNavigate" type="Transparent" />
+                                            </m:FlexBox>
+                                        </t:template>
+                                    </t:Column>
+                                </t:columns>
+                            </t:Table>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+        </sections>
+    </ObjectPageLayout>
+</mvc:View>

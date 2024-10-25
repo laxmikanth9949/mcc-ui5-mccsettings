@@ -1,0 +1,103 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:t="sap.ui.table" xmlns:viz="sap.viz.ui5.controls"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:viz.data="sap.viz.ui5.data"
+	controllerName="mcc.workbench.admin.settings.controller.Assistant.ErrorLog.Main" xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page title="{i18n>pageTitleAssistantErrorLog}" navButtonPress="onNavBack" navButtonTooltip="Home" showNavButton="true">
+				<content>
+					<!--<viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType='line'
+						vizProperties="{ title: { text: 'Error count last 30 days' } }">
+						<viz:dataset>
+							<viz.data:FlattenedDataset data="{P1CTool>/P1CErrorLogCount}">
+								<viz.data:dimensions>
+									<viz.data:DimensionDefinition name="Day" value="{path: 'dateobject', formatter: '.formatDate'}"/>
+								</viz.data:dimensions>
+								<viz.data:measures>
+									<viz.data:MeasureDefinition name="Errors" value="{count}"/>
+								</viz.data:measures>
+							</viz.data:FlattenedDataset>
+						</viz:dataset>
+						<viz:feeds>
+							<viz.feeds:FeedItem id='valueAxisFeed' uid="valueAxis" type="Measure" values="Errors"/>
+							<viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="Day"/>
+						</viz:feeds>
+					</viz:VizFrame>-->
+					<t:Table id="ErrorLogTable" selectionMode="MultiToggle" enableCellFilter="true" visibleRowCount="20" alternateRowColors="true"
+						showColumnVisibilityMenu="true" rows="{P1CTool>/P1CErrorLog}" cellClick="onCellClick">
+						<t:extension>
+							<OverflowToolbar>
+								<ToolbarSpacer/>
+								<Button icon="sap-icon://delete" press="onDelete"/>
+							</OverflowToolbar>
+						</t:extension>
+						<t:columns>
+							<!--The "name" property of Column is equal to the field naming on the OData service the data is coming from-->
+							<t:Column width="11rem" filterProperty="ID" visible="false" sortProperty="ID" name="ID">
+								<!--The "text" property defines the name of the column visible in the UI-->
+								<!--Currently the "name" and "text" property have the same value-->
+								<Label text="{i18n>id}"/>
+								<t:template>
+									<Text text="{P1CTool>ID}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="6rem" filterProperty="CaseID" sortProperty="CaseID" name="CaseID">
+								<Label text="{i18n>CaseID}"/>
+								<t:template>
+									<Text text="{P1CTool>CaseID}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="6rem" filterProperty="Method" sortProperty="Method" name="Method">
+								<Label text="{i18n>Method}"/>
+								<t:template>
+									<Text text="{P1CTool>Method}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="20rem" filterProperty="RequestURL" sortProperty="RequestURL" name="RequestURL">
+								<Label text="{i18n>RequestURL}"/>
+								<t:template>
+									<Text text="{P1CTool>RequestURL}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem" filterProperty="oDataService" sortProperty="oDataService" name="oDataService">
+								<Label text="{i18n>oDataService}"/>
+								<t:template>
+									<Text text="{P1CTool>oDataService}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="30rem" filterProperty="ErrorMessage" sortProperty="ErrorMessage" name="ErrorMessage">
+								<Label text="{i18n>ErrorMessage}"/>
+								<t:template>
+									<Text text="{P1CTool>ErrorMessage}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="6rem" filterProperty="ErrorStatusCode" sortProperty="ErrorStatusCode" name="ErrorStatusCode">
+								<Label text="{i18n>ErrorStatusCode}"/>
+								<t:template>
+									<Text text="{P1CTool>ErrorStatusCode}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="20rem" filterProperty="RequestBody" sortProperty="RequestBody" name="RequestBody">
+								<Label text="{i18n>RequestBody}"/>
+								<t:template>
+									<Text text="{P1CTool>RequestBody}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem" sortProperty="createdAt" name="createdAt">
+								<Label text="{i18n>createdAt}"/>
+								<t:template>
+									<Text text="{P1CTool>createdAt}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="6rem" filterProperty="createdBy" sortProperty="createdBy" name="createdBy">
+								<Label text="{i18n>createdBy}"/>
+								<t:template>
+									<Text text="{P1CTool>createdBy}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+						</t:columns>
+					</t:Table>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

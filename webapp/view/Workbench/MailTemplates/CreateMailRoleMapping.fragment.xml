@@ -1,0 +1,28 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog title="{i18n>addMailRoleMapping}">
+		<content>
+			<f:SimpleForm>
+				<f:content>
+					<VBox>
+						<Label text="Role-Name" required="false"/>
+						<ComboBox id="RoleID" enabled="true" visible="true" items="{/MailRoles}" width="80%">
+							<core:Item key="{RoleID}" text="{RoleName}"/>
+						</ComboBox>
+						<Label text="{i18n>toOrCC}?"/>
+						<Select name="TOorCC" id="TOorCC" enabled="true" visible="true" items="{oValueHelp>/TOorCC}">
+							<core:Item key="{oValueHelp>key}" text="{oValueHelp>value}"/>
+						</Select>
+						<Label text="{i18n>editable}?"/>
+						<Switch state="true" id="Editable" customTextOn="Yes" customTextOff="No"/>
+					</VBox>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<beginButton>
+			<Button text="Create" press=".onCreateTemplateMapping" type="Emphasized"/>
+		</beginButton>
+		<endButton>
+			<Button text="Cancel" press=".onCancelCreate"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

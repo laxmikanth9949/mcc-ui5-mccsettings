@@ -1,0 +1,93 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:t="sap.ui.table"
+	controllerName="mcc.workbench.admin.settings.controller.ToolSuite.Notifications.NotificationSettings"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page title="MCC Settings - Personal Notification Settings for {settings>/currentUserFirstname} {settings>/currentUserLastname}"
+				showNavButton="true" navButtonPress="onNavBack">
+				<content>
+					<MessageStrip
+					enableFormattedText="true"
+					id="MessageStripNotificationSettings"
+						showIcon="true" type="Information" showCloseButton="false" class="sapUiSmallMargin">
+						<link>
+							<Link text="Send Teams Notification" press="onSendTestNotification"/>
+						</link>
+					</MessageStrip>
+			
+        	 <MessageStrip class="sapUiSmallMargin"  showIcon="true" text="Personal data protection measure: delete all your notification settings if you do not plan to use the MCC Notification Framework any longer - click here:">
+            <Link id="deleteSettingsButton" text="Delete My Setting" press="onDeleteSettingsPress" />
+			</MessageStrip> 
+					<FlexBox id="busyIndicator" class="sapUiMediumMargin" alignItems="Start" justifyContent="Center" visible="false">
+						<BusyIndicator text="Teams Notification is being delivered...This might take some seconds" class="sapUiTinyMarginBottom"/>
+					</FlexBox>
+					<t:Table selectionMode="None" visibleRowCount="12" fixedColumnCount="1" id="NotificationSettingsTable"
+						rows="{ path: 'MCCToolSuite>/NotificationSettings', parameters: { 'expand' : 'toNotificationType' }, filters:[ {path: 'toNotificationType/NotificationCategory', operator: 'EQ', value1: 'personal'}, {path: 'toNotificationType/NotificationCategory', operator: 'EQ', value1: 'both'}, {path: 'toNotificationType/bVisibleInUserSettings', operator: 'EQ', value1: 'true'}], sorter: {path: 'toNotificationType/NotificationGroup'}}"
+						ariaLabelledBy="title" rowActionCount="2">
+						<t:extension>
+							<OverflowToolbar style="Clear">
+
+								<ToolbarSpacer/>
+						<!--		<Label  text="{i18n>ExpertMode}"/>
+							<Switch change="onExpertModeChange" state="false"></Switch> -->
+								<Button  icon="sap-icon://add" text="Add Row" press="onAddPress"  type="Transparent"  />
+								<Button icon="sap-icon://clear-filter"  press="onResetFilter" class="sapUiLargeMarginEnd" type="Transparent"/>
+							</OverflowToolbar>
+						</t:extension>
+								<t:rowActionTemplate>
+							<t:RowAction>
+								<t:items>
+									<t:RowActionItem type="Custom" icon="sap-icon://edit" tooltip="Edit" press="onEditPress" visible="{ path: 'MCCToolSuite>toNotificationType/allowedFilterCriteria', formatter: '.formatter.checkVisibility' }"/>
+									<t:RowActionItem type="Custom" icon="sap-icon://delete" tooltip="Delete" press="onDelete" visible="{ path: 'MCCToolSuite>toNotificationType/allowedFilterCriteria', formatter: '.formatter.checkVisibility' }"/>
+								</t:items>
+							</t:RowAction>
+						</t:rowActionTemplate>
+						<t:columns>
+					<t:Column  width="3rem">
+								<t:template>
+						<Button class="sapUiTinyMarginEnd" icon="sap-icon://hint" press="showNotificationGroupDescription"></Button>
+								</t:template>
+							</t:Column>
+							<t:Column visible="true" filterProperty="toNotificationType/NotificationGroup" sortProperty="toNotificationType/NotificationGroup"
+								width="18rem">
+								<Label text="{i18n>NotificationGroup}"/>
+								<t:template>
+			
+										<Text text="{MCCToolSuite>toNotificationType/NotificationGroup}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="NotificationType" sortProperty="NotificationType" width="10rem">
+								<Label text="{i18n>NotificationType}"/>
+								<t:template>
+									<Text text="{MCCToolSuite>NotificationType}"/>
+								</t:template>
+							</t:Column>
+							
+							<t:Column filterProperty="bGetTeamsNotification" sortProperty="bGetTeamsNotification" width="5rem">
+								<Label text="Teams"/>
+								<t:template>
+									<Switch change="onSwitchChange($event, 'bGetTeamsNotification')" state="{MCCToolSuite>bGetTeamsNotification}"></Switch>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="bGetMailNotification" sortProperty="bGetMailNotification" width="5rem">
+								<Label text="Mail"/>
+								<t:template>
+									<Switch change="onSwitchChange($event, 'bGetMailNotification')" state="{MCCToolSuite>bGetMailNotification}"></Switch>
+								</t:template>
+							</t:Column>
+								<t:Column filterProperty="Filter" sortProperty="Filter" minWidth="40rem">
+								<HBox alignItems="Center">
+								<Label text="{i18n>Filter}"/> 
+								<Button icon="sap-icon://hint" press="onPressFilterDesc" class="sapUiTinyMarginBegin"></Button>
+								</HBox>
+								<t:template>
+									<TextArea value="{MCCToolSuite>Filter}" rows="1"  editable="false" visible="{ path: 'MCCToolSuite>toNotificationType/allowedFilterCriteria', formatter: '.formatter.checkVisibility' }" growing="true"/>
+								</t:template>
+							</t:Column>
+						</t:columns>
+					</t:Table>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

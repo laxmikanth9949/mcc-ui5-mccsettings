@@ -1,0 +1,101 @@
+<mvc:View controllerName="mcc.workbench.admin.settings.controller.SolutionHub.Events.EventList" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:plugins="sap.ui.table.plugins" xmlns:f="sap.f" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core" xmlns:m="sap.m" xmlns="sap.ui.table"
+	xmlns:semantic="sap.m.semantic" xmlns:unified="sap.ui.unified">
+	<m:App>
+		<m:pages>
+			<m:Page title="{i18n>pageTitleSolutionHubEvents}" navButtonPress="onNavBack" showNavButton="true">
+				<m:content>
+					<f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false">
+						<!-- DynamicPage Content -->
+						<f:content>
+							<Table id="EventListTable" title="Events" selectionMode="MultiToggle" visibleRowCountMode="Auto"
+								rows="{ path: 'SolutionHub>/Events', sorter: [{path: 'Status'},{ path: 'StartDateTime', descending: false }]}" ariaLabelledBy="title"
+								rowActionCount="1" enableCellFilter="true" rowSelectionChange="onSelectRow">
+								<extension>
+									<m:OverflowToolbar>
+										<m:ToolbarSpacer/>
+										<m:Button id="myEvents" text="Filter My Events" type="Emphasized" press="onFilterMyEvents"/>
+										<m:Button id="allEvents" text="All Events" type="Emphasized" press="onFilterAllEvents" visible="false"/>
+										<m:ToolbarSeparator/>
+										<m:Button icon="sap-icon://add" press="onCreate" tooltip="Create new Event"/>
+										<m:Button id="copyEvent" icon="sap-icon://add" text="Copy" press="onCreateCopy" enabled="false" tooltip="Create new Event from Copy"/>
+										<m:ToolbarSeparator/>
+										<m:Button id="publishEvents" text="Publish" press="onPublish" tooltip="Publish multiple Events" enabled="false"/>
+										<m:ToolbarSeparator/>
+										<m:Button id="deleteEvents" icon="sap-icon://delete" type="Default" press="onDelete" tooltip="Delete selected Events" enabled="false"/>
+									</m:OverflowToolbar>
+								</extension>
+								<rowActionTemplate>
+									<RowAction>
+										<items>
+											<RowActionItem type="Navigation" press="onNavigate"/>
+										</items>
+									</RowAction>
+								</rowActionTemplate>
+								<!--	<rowSettingsTemplate>
+									<RowSettings highlight="{path: 'SolutionHub>EventType', formatter: '.formatter.getRowColor'}"/>
+								</rowSettingsTemplate>-->
+								<columns>
+									<Column filterProperty="Status" sortProperty="Status" width="10%" hAlign="Center">
+										<m:Label text="{i18n>Status}"/>
+										<template>
+											<m:ObjectStatus text="{SolutionHub>Status}" state="{ path: 'SolutionHub>Status', formatter: '.formatter.getStatusColor' }"/>
+										</template>
+									</Column>
+									<Column filterProperty="StartDateTime" sortProperty="StartDateTime" width="12%" hAlign="Center">
+										<m:Label text="{i18n>StartDateTime}"/>
+										<template>
+											<m:Text text="{ path: 'SolutionHub>StartDateTime', formatter: '.formatter.formatEventDateTime' }" wrapping="false" visible="true"/>
+										</template>
+									</Column>
+									<Column filterProperty="EndDateTime" sortProperty="EndDateTime" width="12%" hAlign="Center">
+										<m:Label text="{i18n>EndDateTime}"/>
+										<template>
+											<m:Text text="{ path: 'SolutionHub>EndDateTime', formatter: '.formatter.formatEventDateTime' }" wrapping="false" visible="true"/>
+										</template>
+									</Column>
+									<Column filterProperty="EventName" sortProperty="EventName" width="23%">
+										<m:Label text="{i18n>EventName}"/>
+										<template>
+											<m:Text text="{SolutionHub>EventName}" wrapping="false" visible="true"/>
+										</template>
+									</Column>
+									<Column width="23%">
+										<!--filterProperty="Contacts" sortProperty="Contacts"-->
+										<m:Label text="{i18n>Contacts}"/>
+										<template>
+											<m:Text text="{parts: [{path: 'SolutionHub>Contacts'},{path: 'contacts>/'}], formatter: '.formatter.formatEventListContacts'}"
+												wrapping="false" tooltip="{parts: [{path: 'SolutionHub>Contacts'},{path: 'contacts>/'}], formatter: '.formatter.formatEventListContacts'}"
+												visible="true"/>
+										</template>
+										<menu>
+											<unified:Menu>
+												<unified:items>
+													<unified:MenuItem text="Sort Ascending" icon="sap-icon://sort-ascending" select="onSortContacts"/>
+													<unified:MenuItem text="Sort Descending" icon="sap-icon://sort-descending" select="onSortContacts"/>
+													<unified:MenuTextFieldItem label="Filter" icon="sap-icon://filter" select="onFilterContacts"/>
+												</unified:items>
+											</unified:Menu>
+										</menu>
+									</Column>
+									<Column filterProperty="SolutionArea" sortProperty="SolutionArea" width="13%" hAlign="Center">
+										<m:Label text="{i18n>SolutionArea}"/>
+										<template>
+											<m:Text text="{SolutionHub>SolutionArea}" wrapping="false" visible="true"/>
+										</template>
+									</Column>
+									<Column filterProperty="EventID" sortProperty="EventID" width="7%">
+										<m:Label text="{i18n>EventID}"/>
+										<template>
+											<m:Text text="{SolutionHub>EventID}" wrapping="false" visible="true"/>
+										</template>
+									</Column>
+								</columns>
+							</Table>
+						</f:content>
+					</f:DynamicPage>
+				</m:content>
+			</m:Page>
+		</m:pages>
+	</m:App>
+</mvc:View>

@@ -1,0 +1,106 @@
+<mvc:View displayBlock="true" height="100%"
+    controllerName="mcc.workbench.admin.settings.controller.ToolSuite.AIManager.AIManager"
+    xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:m="sap.m" xmlns:f="sap.f"
+    xmlns:chart="sap.suite.ui.microchart" xmlns:t="sap.ui.table" xmlns:form="sap.ui.layout.form"
+    xmlns="sap.uxap">
+    <ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true"
+        preserveHeaderStateOnScroll="false" headerContentPinnable="true" isChildPage="true"
+        upperCaseAnchorBar="false">
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <expandedHeading>
+                    <m:VBox>
+                        <m:Input width="250%" value="{path: 'MCCAIManagerService>Description', mode: 'OneWay'}"
+                            wrapping="true" class="sapUiSmallMarginEnd" id="detailHeaderInput"
+                            placeholder="Insert description"
+                            visible="{local>/editable}" />
+                        <m:Title text="{MCCAIManagerService>Description}" wrapping="true"
+                            class="sapUiSmallMarginEnd" id="detailHeader"
+                            visible="{= !${local>/editable} }" />
+                    </m:VBox>
+                </expandedHeading>
+                <snappedHeading>
+                    <m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Center"
+                        class="sapUiTinyMarginToEnd">
+                        <m:Title text="{local>/detailHeaderTitle}" wrapping="true" />
+                    </m:FlexBox>
+                </snappedHeading>
+                <navigationActions>
+                    <m:OverflowToolbarButton id="editButton" type="Transparent"
+                        icon="sap-icon://edit" visible="{= !${local>/editable} }" press="handleEdit"
+                        tooltip="Edit entry" />
+                    <m:OverflowToolbarButton id="saveButton" type="Transparent"
+                        icon="sap-icon://save" visible="{local>/editable}" press="handleSave"
+                        tooltip="Save entry" />
+                    <m:OverflowToolbarButton id="deleteButton" type="Transparent"
+                        icon="sap-icon://delete" press="handleDelete" tooltip="Delete entry" />
+                    <m:OverflowToolbarButton id="closeButton" type="Transparent"
+                        icon="sap-icon://decline" press="handleClose" tooltip="Close middle column" />
+                </navigationActions>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
+        <sections>
+            <ObjectPageSection>
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <m:VBox>
+                                <m:Panel headerText="Input" expandable="true" expanded="true">
+                                    <m:TextArea id="InputPrompt"
+                                        value="{path: 'MCCAIManagerService>Parameters', formatter: '.formatter.formatParameterMessage', mode: 'OneWay'}"
+                                        width="100%" placeholder="Insert prompt" growing="true"
+                                        required="true" editable="{local>/editable}" />
+                                </m:Panel>
+                                <m:Panel headerText="Parameters" expandable="true" expanded="true"
+                                    width="100%">
+
+                                    <m:HBox width="100%">
+                                        <m:VBox width="50%">
+                                            <m:Label text="Max Tokens" />
+                                            <m:Slider id="SliderTokens" showAdvancedTooltip="true"
+                                                value="{path: 'MCCAIManagerService>Parameters', formatter: '.formatter.formatMaxTokens', targetType: 'any', mode: 'OneWay'}"
+                                                min="0" max="8000" step="10" width="100%"
+                                                showHandleTooltip="false" inputsAsTooltips="true"
+                                                enabled="{local>/editable}" />
+                                        </m:VBox>
+                                        <m:VBox width="50%">
+                                            <m:Label text="Temperature" />
+                                            <m:Slider id="SliderTemperature"
+                                                showAdvancedTooltip="true"
+                                                value="{path: 'MCCAIManagerService>Parameters', formatter: '.formatter.formatTemperatur', targetType: 'any', mode: 'OneWay'}"
+                                                min="0" max="2" step="0.01" width="100%"
+                                                showHandleTooltip="false" inputsAsTooltips="true"
+                                                enabled="{local>/editable}" />
+                                        </m:VBox>
+                                    </m:HBox>
+
+                                    <m:HBox width="100%">
+                                        <m:VBox width="50%">
+                                            <m:Label text="Frequency Penalty" />
+                                            <m:Slider id="SliderFrequencyPenalty"
+                                                showAdvancedTooltip="true"
+                                                value="{path: 'MCCAIManagerService>Parameters', formatter: '.formatter.formatFrequencyPenalty', targetType: 'any', mode: 'OneWay'}"
+                                                min="-2" max="2" step="0.01" width="100%"
+                                                showHandleTooltip="false" inputsAsTooltips="true"
+                                                enabled="{local>/editable}" />
+                                        </m:VBox>
+                                        <m:VBox width="50%">
+                                            <m:Label text="Presence Penalty" />
+                                            <m:Slider id="SliderPresencePenalty"
+                                                showAdvancedTooltip="true"
+                                                value="{path: 'MCCAIManagerService>Parameters', formatter: '.formatter.formatPresencePenalty', targetType: 'any', mode: 'OneWay'}"
+                                                min="-2" max="2" step="0.01" width="100%"
+                                                showHandleTooltip="false" inputsAsTooltips="true"
+                                                enabled="{local>/editable}" />
+                                        </m:VBox>
+                                    </m:HBox>
+
+                                </m:Panel>
+                            </m:VBox>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+        </sections>
+    </ObjectPageLayout>
+</mvc:View>

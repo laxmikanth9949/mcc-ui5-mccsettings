@@ -1,0 +1,62 @@
+<mvc:View controllerName="mcc.workbench.admin.settings.controller.Misc.Solutions.List" xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f"
+	xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core" xmlns:m="sap.m" xmlns="sap.ui.table" xmlns:semantic="sap.m.semantic">
+	<m:App>
+		<m:pages>
+			<m:Page title="{i18n>panelTitleSolutions}" navButtonPress="onNavBack" showNavButton="true">
+				<m:content>
+					<f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false">
+						<!-- DynamicPage Content -->
+						<f:content>
+							<Table id="table" selectionMode="None" visibleRowCountMode="Auto"
+								rows="{ path: 'ProductMapping>/', sorter: { path: 'SolutionArea', descending: false }}" ariaLabelledBy="title" rowActionCount="2">
+								<rowActionTemplate>
+									<RowAction>
+										<items>
+											<RowActionItem type="Custom" icon="{= ${ProductMapping>_editmode} ? 'sap-icon://save' : 'sap-icon://edit'}" press="firstActionPressed"/>
+											<RowActionItem type="Custom" icon="{= ${ProductMapping>_editmode} ? 'sap-icon://decline' : 'sap-icon://delete'}"
+												press="secondActionPressed"/>
+										</items>
+									</RowAction>
+								</rowActionTemplate>
+								<extension>
+									<m:OverflowToolbar>
+										<m:Title id="title" text="{masterView>/title}"/>
+										<m:ToolbarSpacer/>
+										<m:SearchField search="onSearch" width="25rem"/>
+										<m:Button icon="sap-icon://excel-attachment" type="Transparent" press="onExcelExport"/>
+										<m:Button icon="sap-icon://add" type="Emphasized" press="onCreate" tooltip="Create new solution"/>
+									</m:OverflowToolbar>
+								</extension>
+								<columns>
+									<Column filterProperty="SolutionArea" sortProperty="SolutionArea">
+										<m:Label text="{i18n>solutionArea}"/>
+										<template>
+											<m:Input value="{ProductMapping>SolutionArea}" tooltip="{ProductMapping>SolutionArea}" editable="{ProductMapping>_editmode}"
+												valueState="{= ${ProductMapping>SolutionArea} !== '' ? 'None' : 'Error'}"/>
+										</template>
+									</Column>
+									<Column filterProperty="ProductID" sortProperty="ProductID">
+										<m:Label text="{i18n>productID}"/>
+										<template>
+											<m:Input value="{ProductMapping>ProductID}" tooltip="{ProductMapping>ProductID}" editable="{ProductMapping>_editmode}"
+											valueState="{= (${ProductMapping>ProductID} !== '' || ${ProductMapping>ProductLineID} !== '') ? 'None' : 'Error'}"/>
+										</template>
+									</Column>
+									<Column filterProperty="ProductLineID" sortProperty="ProductLineID">
+										<m:Label text="{i18n>productLineID}"/>
+										<template>
+											<m:Input value="{ProductMapping>ProductLineID}"
+												tooltip="{ProductMapping>ProductLineID}"
+												editable="{ProductMapping>_editmode}"
+												valueState="{= (${ProductMapping>ProductID} !== '' || ${ProductMapping>ProductLineID} !== '') ? 'None' : 'Error'}" />
+										</template>
+									</Column>
+								</columns>
+							</Table>
+						</f:content>
+					</f:DynamicPage>
+				</m:content>
+			</m:Page>
+		</m:pages>
+	</m:App>
+</mvc:View>

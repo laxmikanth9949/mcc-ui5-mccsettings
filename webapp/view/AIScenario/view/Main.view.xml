@@ -1,0 +1,49 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:t="sap.ui.table"
+	controllerName="mcc.workbench.admin.settings.controller.AIScenario.Main">
+	<m:Page title="{i18n>pageTitleAISummarizer}" navButtonPress="onNavBack" showNavButton="true">
+		<f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false" fitContent="false">
+			<f:content>
+				<t:Table visibleRowCountMode="Interactive" id="ScenarioListTable"
+					selectionMode="None"
+					rows="{path: 'MCCAIManagerService>/AIManagerScenario', parameters: {'$orderby': 'Description'}}"
+					selectionBehavior="RowSelector" enableSelectAll="false">
+					<t:toolbar>
+						<m:Toolbar>
+							<m:ToolbarSpacer />
+							<m:Button icon="sap-icon://sort" type="Transparent" press="onSort" />
+						</m:Toolbar>
+					</t:toolbar>
+					<t:columns>
+						<t:Column>
+							<t:label>
+								<m:Label text="{i18n>appTitleAISummary}" />
+							</t:label>
+							<t:template>
+								<m:Text text="{MCCAIManagerService>Description}" />
+							</t:template>
+						</t:Column>
+						<t:Column>
+							<t:label>
+								<m:Label text="{i18n>columnAverageRating}" />
+							</t:label>
+							<t:template>
+								<m:RatingIndicator id="RI_S" maxValue="5" visualMode="Half"
+									editable="false" class="sapUiSmallMarginBottom"
+									value="{path: 'MCCAIManagerService>ID', formatter:'.formatter.averageFeedback', targetType : 'any'}"
+									iconSize="16px" />
+							</t:template>
+						</t:Column>
+						<t:Column width="2rem">
+							<t:template>
+								<m:FlexBox justifyContent="Center" alignItems="Center">
+									<m:Button icon="sap-icon://navigation-right-arrow"
+										press="onNavigate" type="Transparent" />
+								</m:FlexBox>
+							</t:template>
+						</t:Column>
+					</t:columns>
+				</t:Table>
+			</f:content>
+		</f:DynamicPage>
+	</m:Page>
+</mvc:View>

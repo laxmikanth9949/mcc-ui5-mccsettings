@@ -1,0 +1,713 @@
+{
+	"_version": "1.8.0",
+	"sap.cloud": {
+		"service": "mccsettings"
+	},
+	"sap.app": {
+		"id": "mcc.workbench.admin.settings",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "24.8.16"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "apimcf/mcc-service/odata/v2/MCCIssueTracking/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			},
+			"P1CToolService": {
+				"uri": "apimcf/mcc-service/odata/v2/P1CTool/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			},
+			"AdminAppService": {
+				"uri": "apimcf/mcc-service/odata/v2/AdminApp/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			},
+			"SolutionHubService": {
+				"uri": "apimcf/mcc-service/odata/v2/SolutionHub/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			},
+			"ZS_APP_DEP_SRV": {
+				"uri": "apim/ic/sap/opu/odata/sap/ZS_APP_DEP_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			},
+			"ZS_AGS_FSC2_SRV": {
+				"uri": "apim/ic/sap/opu/odata/sap/ZS_AGS_FSC2_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			},
+			"MCCToolSuiteService": {
+				"uri": "apimcf/mcc-service/odata/v2/MCCToolSuite/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			},
+			"WorkforceMgmt": {
+				"uri": "apimcf/mcc-service/odata/v2/WorkforceMgmt/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			},
+			"MCCAIManagerService": {
+				"uri": "apimcf/mcc-aiservice/odata/v4/MCCAIManagerService/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "4.0",
+					"localUri": "localService/metadata.xml"
+				}
+			},
+			"TeamCalendar": {
+				"uri": "apim/ip/sap/opu/odata/sap/HCMFAB_COMMON_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			}
+		},
+		"sourceTemplate": {
+			"id": "html5projecttemplates.2masterdetailcrud",
+			"version": "1.40.12"
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "sap-icon://detail-view",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": false,
+			"phone": false
+		}
+	},
+	"sap.ui5": {
+		"config": {
+			"fullWidth": true
+		},
+		"rootView": {
+			"viewName": "mcc.workbench.admin.settings.view.App",
+			"type": "XML",
+			"id": "app",
+			"async": true
+		},
+		"dependencies": {
+			"minUI5Version": "1.65.6"
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": false
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "mcc.workbench.admin.settings.i18n.i18n"
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"settings": {
+					"metadataUrlParams": {
+						"sap-documentation": "heading"
+					},
+					"defaultBindingMode": "TwoWay",
+					"headers": {
+						"AppIdentifier": "FkAbP4ZrSF3gjOiI2Na2XxfpMpcsXC6r"
+					}
+				}
+			},
+			"P1CTool": {
+				"dataSource": "P1CToolService",
+				"settings": {
+					"metadataUrlParams": {
+						"sap-documentation": "heading"
+					},
+					"defaultBindingMode": "TwoWay",
+					"headers": {
+						"AppIdentifier": "FkAbP4ZrSF3gjOiI2Na2XxfpMpcsXC6r"
+					}
+				}
+			},
+			"AdminApp": {
+				"dataSource": "AdminAppService",
+				"settings": {
+					"metadataUrlParams": {
+						"sap-documentation": "heading"
+					},
+					"defaultBindingMode": "TwoWay",
+					"headers": {
+						"AppIdentifier": "FkAbP4ZrSF3gjOiI2Na2XxfpMpcsXC6r"
+					}
+				}
+			},
+			"SolutionHub": {
+				"dataSource": "SolutionHubService",
+				"settings": {
+					"metadataUrlParams": {
+						"sap-documentation": "heading"
+					},
+					"defaultBindingMode": "TwoWay",
+					"headers": {
+						"AppIdentifier": "FkAbP4ZrSF3gjOiI2Na2XxfpMpcsXC6r"
+					}
+				}
+			},
+			"MCCToolSuite": {
+				"dataSource": "MCCToolSuiteService",
+				"settings": {
+					"metadataUrlParams": {
+						"sap-documentation": "heading"
+					},
+					"defaultBindingMode": "TwoWay",
+					"headers": {
+						"AppIdentifier": "FkAbP4ZrSF3gjOiI2Na2XxfpMpcsXC6r"
+					}
+				}
+			},
+			"WorkforcePlannerMgmt": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"dataSource": "WorkforceMgmt",
+				"settings": {
+					"metadataUrlParams": {
+						"sap-documentation": "heading"
+					},
+					"defaultBindingMode": "TwoWay",
+					"headers": {
+						"AppIdentifier": "FkAbP4ZrSF3gjOiI2Na2XxfpMpcsXC6r"
+					}
+				}
+			},
+			"MCCAIManagerService": {
+				"type": "sap.ui.model.odata.v4.ODataModel",
+				"dataSource": "MCCAIManagerService",
+				"settings": {
+					"groupId": "$auto",
+					"synchronizationMode": "None",
+					"httpHeaders": {
+						"AppIdentifier": "FkAbP4ZrSF3gjOiI2Na2XxfpMpcsXC6r"
+					}
+				}
+			},
+			"ZS_APP_DEP_SRV": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request",
+					"metadataUrlParams": {
+						"sap-language": "en"
+					},
+					"headers": {
+						"AppIdentifier": "FkAbP4ZrSF3gjOiI2Na2XxfpMpcsXC6r"
+					}
+				},
+				"dataSource": "ZS_APP_DEP_SRV",
+				"preload": true
+			},
+			"ZS_AGS_FSC2_SRV": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request",
+					"metadataUrlParams": {
+						"sap-language": "en"
+					},
+					"headers": {
+						"AppIdentifier": "FkAbP4ZrSF3gjOiI2Na2XxfpMpcsXC6r"
+					}
+				},
+				"dataSource": "ZS_AGS_FSC2_SRV",
+				"preload": true
+			},
+			"teamCalendarModel": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"dataSource": "TeamCalendar",
+				"settings": {
+					"headers": {
+						"AppIdentifier": "FkAbP4ZrSF3gjOiI2Na2XxfpMpcsXC6r"
+					}
+				}
+			}
+		},
+		"resources": {
+			"css": [{
+				"uri": "css/style.css"
+			}]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"type": "View",
+				"viewType": "XML",
+				"viewPath": "mcc.workbench.admin.settings.view",
+				"controlId": "idAppControl",
+				"controlAggregation": "pages",
+				"transition": "slide",
+				"async": true
+			},
+			"routes": [{
+					"pattern": "",
+					"name": "home",
+					"target": "home"
+				},
+				{
+					"pattern": "WorkbenchMailRolesMaster",
+					"name": "masterWorkbenchMailRoles",
+					"target": [
+						"masterWorkbenchMailRoles"
+					]
+				},
+				{
+					"pattern": "WorkbenchFieldsMaster",
+					"name": "masterWorkbenchFields",
+					"target": [
+						"masterWorkbenchFields"
+					]
+				},
+				{
+					"pattern": "WorkbenchFields/{FieldID}",
+					"name": "objectWorkbenchFields",
+					"target": [
+						"masterWorkbenchFields",
+						"objectWorkbenchFields"
+					]
+				},
+				{
+					"pattern": "WorkbenchMailRoles/{RoleID}",
+					"name": "objectWorkbenchMailRoles",
+					"target": [
+						"masterWorkbenchMailRoles",
+						"objectWorkbenchMailRoles"
+					]
+				},
+				{
+					"pattern": "WorkbenchMailTemplatesMaster",
+					"name": "masterWorkbenchMailTemplates",
+					"target": [
+						"masterWorkbenchMailTemplates"
+					]
+				},
+				{
+					"pattern": "WorkbenchMailTemplates/{TemplateID}",
+					"name": "objectWorkbenchMailTemplates",
+					"target": [
+						"masterWorkbenchMailTemplates",
+						"objectWorkbenchMailTemplates"
+					]
+				},
+				{
+					"name": "MailRoles",
+					"pattern": "MailRolesList",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"MailRoles"
+					]
+				},
+				{
+					"name": "Events",
+					"pattern": "EventList",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"EventList"
+					]
+				},
+				{
+					"name": "AIManager",
+					"pattern": "AIManger",
+					"target": [
+						"AIManager"
+					]
+				},
+				{
+					"name": "AIManagerDetail",
+					"pattern": "AIMangerDetail",
+					"target": [
+						"AIManager",
+						"AIManagerDetail"
+					]
+				},
+				{
+					"name": "FAQSettings",
+					"pattern": "FAQSettings",
+					"target": [
+						"FAQSettings"
+					]
+				},
+				{
+					"name": "CollectionDetails",
+					"pattern": "CollectionDetails/{CollectionID}",
+					"target": [
+						"CollectionDetails"
+					]
+				},
+				{
+					"name": "RoadmapPhases",
+					"pattern": "RoadmapPhases",
+					"target": [
+						"RoadmapPhases"
+					]
+				},
+				{
+					"pattern": "RoadmapPhase/{ID}",
+					"name": "RoadmapTasks",
+					"target": [
+						"RoadmapPhases",
+						"RoadmapTasks"
+					]
+				},
+				{
+					"pattern": "Solutions",
+					"name": "masterSolutions",
+					"target": [
+						"masterSolutions"
+					]
+				},
+				{
+					"pattern": "MCCTags",
+					"name": "masterMCCTags",
+					"target": [
+						"masterMCCTags"
+					]
+				},
+				{
+					"name": "QualificationDispatching",
+					"pattern": "masterQualificationDispatching",
+					"target": [
+						"masterQualificationDispatching"
+					]
+				},
+				{
+					"name": "MCCCardLinks",
+					"pattern": "MCCCardLinks",
+					"target": [
+						"MCCCardLinks"
+					]
+				},
+				{
+					"pattern": "WorkbenchErrorLog",
+					"name": "masterWorkbenchErrorLog",
+					"target": [
+						"masterWorkbenchErrorLog"
+					]
+				},
+				{
+					"pattern": "AssistantErrorLog",
+					"name": "masterAssistantErrorLog",
+					"target": [
+						"masterAssistantErrorLog"
+					]
+				},
+				{
+					"pattern": "ScenarioAnalyzer",
+					"name": "masterScenarioAnalyzer",
+					"target": [
+						"masterScenarioAnalyzer"
+					]
+				},
+				{
+					"pattern": "ScenarioFeedback/{requestId}",
+					"name": "masterScenarioFeedback",
+					"target": [
+						"masterScenarioAnalyzer",
+						"masterScenarioFeedback"
+					]
+				},
+				{
+					"pattern": "FeedbackAnalyzer",
+					"name": "masterFeedbackAnalyzer",
+					"target": [
+						"masterScenarioAnalyzer",
+						"masterScenarioFeedback",
+						"masterFeedbackAnalyzer"
+					]
+				},
+				{
+					"pattern": "ToolSuiteErrorLog",
+					"name": "masterToolSuiteErrorLog",
+					"target": [
+						"masterToolSuiteErrorLog"
+					]
+				},
+				{
+					"pattern": "WorkforcePlanner",
+					"name": "masterWorkforcePlanner",
+					"target": [
+						"masterWorkforcePlanner"
+					]
+				},
+				{
+					"pattern": "NotificationSettings",
+					"name": "NotificationSettings",
+					"target": [
+						"NotificationSettings"
+					]
+				},
+				{
+					"pattern": "NotificationDedicatedUsers",
+					"name": "NotificationDedicatedUsers",
+					"target": [
+						"NotificationDedicatedUsers"
+					]
+				}
+			],
+			"targets": {
+				"splitscreenTarget": {
+					"viewName": "SplitScreen",
+					"viewId": "splitView"
+				},
+				"home": {
+					"viewId": "home",
+					"viewName": "Home",
+					"viewLevel": 1
+				},
+				"masterWorkbenchFields": {
+					"viewName": "Workbench/Fields/Master",
+					"viewLevel": 2,
+					"viewId": "masterWorkbenchFields",
+					"controlAggregation": "masterPages",
+					"parent": "splitscreenTarget",
+					"controlId": "splitContainer"
+				},
+				"objectWorkbenchFields": {
+					"viewName": "Workbench/Fields/Detail",
+					"viewId": "objectWorkbenchFields",
+					"viewLevel": 3,
+					"controlAggregation": "detailPages",
+					"parent": "splitscreenTarget",
+					"controlId": "splitContainer"
+				},
+				"createWorkbenchFields": {
+					"viewName": "Workbench/Fields/CreateEntity",
+					"viewLevel": 3
+				},
+				"masterWorkbenchMailRoles": {
+					"viewName": "Workbench/MailRolesOld/Master",
+					"viewLevel": 2,
+					"viewId": "masterWorkbenchMailRoles",
+					"controlAggregation": "masterPages",
+					"parent": "splitscreenTarget",
+					"controlId": "splitContainer"
+				},
+				"objectWorkbenchMailRoles": {
+					"viewName": "Workbench/MailRolesOld/Detail",
+					"viewId": "objectWorkbenchMailRoles",
+					"viewLevel": 3,
+					"controlAggregation": "detailPages",
+					"parent": "splitscreenTarget",
+					"controlId": "splitContainer"
+				},
+				"createWorkbenchMailRoles": {
+					"viewName": "Workbench/MailRolesOld/CreateEntity",
+					"viewLevel": 3
+				},
+				"MailRoles": {
+					"viewName": "Workbench/MailRoles/List",
+					"viewType": "XML",
+					"viewId": "workbenchMailRoles",
+					"viewLevel": 2
+				},
+				"EventList": {
+					"viewName": "SolutionHub/Events/EventList",
+					"viewType": "XML",
+					"viewId": "EventList",
+					"viewLevel": 2
+				},
+				"RoadmapPhases": {
+					"viewName": "Workbench/Roadmap/RoadmapPhases",
+					"viewType": "XML",
+					"viewId": "RoadmapPhases",
+					"viewLevel": 2,
+					"controlAggregation": "masterPages",
+					"parent": "splitscreenTarget",
+					"controlId": "splitContainer"
+				},
+				"RoadmapTasks": {
+					"viewName": "Workbench/Roadmap/RoadmapTasks",
+					"viewId": "RoadmapTasks",
+					"viewLevel": 3,
+					"controlAggregation": "detailPages",
+					"parent": "splitscreenTarget",
+					"controlId": "splitContainer"
+				},
+				"createRoadmapTask": {
+					"viewName": "Workbench/Roadmap/CreateTask",
+					"viewLevel": 3
+				},
+				"createSolutionHubEvents": {
+					"viewName": "SolutionHub/Events/CreateEntity",
+					"viewLevel": 3
+				},
+				"masterWorkbenchMailTemplates": {
+					"viewName": "Workbench/MailTemplates/Master",
+					"viewLevel": 2,
+					"viewId": "masterWorkbenchMailTemplates",
+					"controlAggregation": "masterPages",
+					"parent": "splitscreenTarget",
+					"controlId": "splitContainer"
+				},
+				"objectWorkbenchMailTemplates": {
+					"viewName": "Workbench/MailTemplates/Detail",
+					"viewId": "objectWorkbenchMailTemplates",
+					"viewLevel": 3,
+					"controlAggregation": "detailPages",
+					"parent": "splitscreenTarget",
+					"controlId": "splitContainer"
+				},
+				"createWorkbenchMailTemplates": {
+					"viewName": "Workbench/MailTemplates/CreateEntity",
+					"viewLevel": 3
+				},
+				"detailObjectNotFound": {
+					"viewName": "DetailObjectNotFound",
+					"viewId": "detailObjectNotFound"
+				},
+				"detailNoObjectsAvailable": {
+					"viewName": "DetailNoObjectsAvailable",
+					"viewId": "detailNoObjectsAvailable"
+				},
+				"notFound": {
+					"viewName": "NotFound",
+					"viewId": "notFound"
+				},
+				"masterSolutions": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "Misc/Solutions/List",
+					"viewLevel": 2
+				},
+				"masterQualificationDispatching": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "Assistant/QualificationDispatching/List",
+					"viewLevel": 2
+				},
+				"MCCCardLinks": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "MCSCardsOVP/MCCCardLinks",
+					"viewLevel": 2
+				},
+				"masterWorkbenchErrorLog": {
+					"viewType": "XML",
+					"viewLevel": 2,
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "Workbench/ErrorLog/view/Main"
+				},
+				"masterAssistantErrorLog": {
+					"viewType": "XML",
+					"viewLevel": 2,
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "Assistant/ErrorLog/view/Main"
+				},
+				"masterScenarioAnalyzer": {
+					"viewType": "XML",
+					"viewLevel": 2,
+					"transition": "slide",
+					"viewName": "AIScenario/view/App"
+				},
+				"masterScenarioFeedback": {
+					"viewType": "XML",
+					"viewLevel": 3,
+					"clearControlAggregation": false,
+					"viewName": "AIScenario/view/Detail"
+				},
+				"masterFeedbackAnalyzer": {
+					"viewType": "XML",
+					"viewLevel": 3,
+					"clearControlAggregation": false,
+					"viewName": "AIScenario/view/Analysis"
+				},
+				"masterToolSuiteErrorLog": {
+					"viewType": "XML",
+					"viewLevel": 2,
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "ToolSuite/ErrorLog/view/Main"
+				},
+				"masterMCCTags": {
+					"viewType": "XML",
+					"viewLevel": 2,
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "SolutionHub/MCCTags/TagList"
+				},
+				"AIManager": {
+					"viewType": "XML",
+					"viewLevel": 2,
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "ToolSuite/AIManager/App"
+				},
+
+				"FAQSettings": {
+					"viewType": "XML",
+					"viewLevel": 2,
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "ToolSuite/FAQSettings/FAQList"
+				},
+				"CollectionDetails": {
+					"viewType": "XML",
+					"viewLevel": 3,
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "ToolSuite/FAQSettings/CollectionDetails"
+				},
+				"masterWorkforcePlanner": {
+					"viewType": "XML",
+					"viewLevel": 2,
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "WorkforcePlanner/Main"
+				},
+				"NotificationSettings": {
+					"viewType": "XML",
+					"viewName": "ToolSuite/Notifications/NotificationSettings"
+				},
+				"NotificationDedicatedUsers": {
+					"viewType": "XML",
+					"viewName": "ToolSuite/Notifications/NotificationDedicatedUsers"
+				}
+			}
+		}
+	},
+	"sap.platform.hcp": {
+		"uri": "webapp",
+		"_version": "1.1.0"
+	}
+}

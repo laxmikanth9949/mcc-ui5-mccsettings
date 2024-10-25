@@ -1,0 +1,50 @@
+<mvc:View controllerName="mcc.workbench.admin.settings.controller.ToolSuite.FAQSettings.FAQList"
+    xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core"
+    xmlns:m="sap.m" xmlns="sap.ui.table">
+    <m:App>
+        <m:pages>
+            <m:Page title="{i18n>panelTitleRAG} Collections" navButtonPress="onNavBack"
+                showNavButton="true">
+                <m:content>
+                    <f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false">
+                        <f:content>
+                            <Table id="faqTable" selectionMode="None" visibleRowCountMode="Auto"
+                                rows="{path: 'collectionsModel>/collections'}"
+                                ariaLabelledBy="title" rowActionCount="2">
+                                <Column width="3.5rem">
+                                    <template>
+                                        <m:Button icon="sap-icon://navigation-right-arrow"
+                                            type="Transparent"
+                                            press="onNavigate" tooltip="Navigate" />
+                                    </template>
+                                </Column>
+                                <Column filterProperty="id" sortProperty="id">
+                                    <m:Label text="ID" />
+                                    <template>
+                                        <m:Input value="{collectionsModel>id}"
+                                            tooltip="{collectionsModel>id}" editable="false" />
+                                    </template>
+                                </Column>
+                                <Column filterProperty="title" sortProperty="title">
+                                    <m:Label text="Title" />
+                                    <template>
+                                        <m:Input value="{collectionsModel>title}"
+                                            tooltip="{collectionsModel>title}" editable="false" />
+                                    </template>
+                                </Column>
+                                <!-- <rowActionTemplate>
+                                    <RowAction>
+                                         <items>
+                                            <RowActionItem type="Custom" icon="sap-icon://delete"
+                                                press="onDelete" />
+                                        </items> 
+                                    </RowAction>
+                                </rowActionTemplate> -->
+                            </Table>
+                        </f:content>
+                    </f:DynamicPage>
+                </m:content>
+            </m:Page>
+        </m:pages>
+    </m:App>
+</mvc:View>

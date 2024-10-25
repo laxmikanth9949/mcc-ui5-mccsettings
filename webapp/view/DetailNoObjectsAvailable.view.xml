@@ -1,0 +1,4 @@
+<mvc:View controllerName="mcc.workbench.admin.settings.controller.BaseController" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
+	<MessagePage id="page" title="{i18n>notAvailableViewTitle}" text="{i18n>noObjectsAvailableText}" icon="{sap-icon://product}" description=""
+		showNavButton="true" navButtonPress="onNavBack"></MessagePage>
+</mvc:View>

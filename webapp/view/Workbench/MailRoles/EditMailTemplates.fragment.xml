@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:core="sap.ui.core"
+	controllerName="mcc.workbench.admin.settings.controller.Workbench.MailRoles.List">
+	<SelectDialog noDataText="No Mail Templates Found" growing="false" title="Mail Mappings" search="onValuehelpDialogSearch"
+		confirm="onValueHelpDialogClose" cancel="onValueHelpDialogClose" multiSelect="true"
+		searchPlaceholder="Depending on the role type some mails may not be available"
+		items="{ path: 'EmailTemplates>/', filters: [{ path : 'TemplateType', operator : 'Contains', value1 : 'Mail'},{ path : 'profile', operator : 'NE', value1 : ''}], sorter: { path: 'profile', descending: false, group : true } }">
+		<StandardListItem selected="{path: 'EmailTemplates>TemplateID', formatter: '.formatter.formatMailSelection'}"
+			title="{EmailTemplates>TemplateName}" description="{EmailTemplates>TemplateDescription} ({EmailTemplates>TemplateType})" type="Active"
+			visible="{path: 'EmailTemplates>profile', formatter: '.MailTemplateVisibility'}"/>
+	</SelectDialog>
+</core:FragmentDefinition>

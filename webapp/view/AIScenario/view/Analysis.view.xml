@@ -1,0 +1,104 @@
+<mvc:View displayBlock="true"
+    controllerName="mcc.workbench.admin.settings.controller.AIScenario.Analysis" height="100%"
+    xmlns="sap.uxap" xmlns:mvc="sap.ui.core.mvc" xmlns:m="sap.m" xmlns:f="sap.f"
+    xmlns:chart="sap.suite.ui.microchart" xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+
+    <ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true"
+        alwaysShowContentHeader="false" preserveHeaderStateOnScroll="false"
+        headerContentPinnable="true" isChildPage="true" upperCaseAnchorBar="false">
+
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <expandedHeading>
+                    <m:Title text="{i18n>analysisDetailPageTitle}" wrapping="true"
+                        class="sapUiSmallMarginEnd" id="detailHeader" />
+                </expandedHeading>
+
+                <snappedHeading>
+                    <m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+                        <m:FlexBox wrap="NoWrap" fitContainer="true" alignItems="Center"
+                            class="sapUiTinyMarginEnd">
+                            <m:Title text="{i18n>analysisDetailPageTitle}" wrapping="true"
+                                class="sapUiTinyMarginEnd" />
+                        </m:FlexBox>
+                    </m:FlexBox>
+                </snappedHeading>
+
+                <navigationActions>
+                    <m:OverflowToolbarButton id="processedFlagButton" icon="sap-icon://flag"
+                        visible="true" press="handleFlag"
+                        tooltip="{path: 'local>/processedFlag', formatter: '.formatter.flagButtonTooltip'}"
+                        type="{path: 'local>/processedFlag', formatter: '.formatter.flagButtonType'}" />
+                    <m:OverflowToolbarButton type="Transparent" icon="sap-icon://decline"
+                        press="handleClose" tooltip="Close end column" />
+                </navigationActions>
+
+                <actions>
+                    <m:Button
+                        text="{path: 'local>/dataID', formatter: '.formatter.formatDataID'}"
+                        press="handleLinkPress" type="Default" />
+                </actions>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
+
+        <sections>
+            <ObjectPageSection title="{i18n>userInputAnalysisSection}">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <form:SimpleForm maxContainerCols="2" editable="false"
+                                layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12"
+                                emptySpanL="0" emptySpanM="0" columnsL="1" columnsM="1">
+                                <form:content>
+                                    <m:TextArea id="user-input-box" width="100%"
+                                        value="{local>/userMessage}" valueLiveUpdate="true"
+                                        growing="true" required="true" />
+                                </form:content>
+                            </form:SimpleForm>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+
+            <ObjectPageSection title="{i18n>gtpResponseAnalysisSection}">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <form:SimpleForm maxContainerCols="2" editable="false"
+                                layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12"
+                                emptySpanL="0" emptySpanM="0" columnsL="1" columnsM="1">
+                                <form:content>
+                                    <m:TextArea id="gpt-response-box" width="100%"
+                                        valueLiveUpdate="true" value="{local>/gptResponseMessage}"
+                                        growing="true" required="true" />
+                                </form:content>
+                            </form:SimpleForm>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+
+            <ObjectPageSection title="{i18n>additionalInfoSection}">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <form:SimpleForm maxContainerCols="2" editable="false"
+                                layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12"
+                                emptySpanL="0" emptySpanM="0" columnsL="1" columnsM="1">
+                                <form:content>
+                                    <m:Label text="Additional Information" />
+                                    <m:Link wrapping="true" width="100%" text="{path: 'local>/dataID', formatter: '.formatter.formatIDURL'}"
+                                        href="{path: 'local>/dataID', formatter: '.formatter.formatIDURL'}" target="_blank" />
+                                </form:content>
+                            </form:SimpleForm>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+
+        </sections>
+
+    </ObjectPageLayout>
+
+</mvc:View>

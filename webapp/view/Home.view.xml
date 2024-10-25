@@ -1,0 +1,269 @@
+<mvc:View xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core"
+	xmlns:microchart="sap.suite.ui.microchart" xmlns:mvc="sap.ui.core.mvc"
+	controllerName="mcc.workbench.admin.settings.controller.Home">
+	<Page showHeader="false">
+		<landmarkInfo>
+			<PageAccessibleLandmarkInfo rootRole="Region" rootLabel="{i18n>Home_rootLabel}"
+				contentRole="Main" contentLabel="{i18n>Home_contentLabel}" />
+		</landmarkInfo>
+		<l:BlockLayout id="BlockLayout" background="Default">
+			<l:BlockLayoutRow>
+				<l:BlockLayoutCell titleAlignment="Center" title="{i18n>appTitle}"
+					backgroundColorSet="ColorSet6" backgroundColorShade="ShadeA">
+					<FlexBox justifyContent="Center">
+						<VBox>
+							<Text text="{i18n>appDescription}" />
+							<HBox justifyContent="Center">
+								<Text text="Environment:" />
+								<Text class="textTitleEnvironment" text="{settings>/environment}" />
+							</HBox>
+						</VBox>
+					</FlexBox>
+					<FlexBox justifyContent="End">
+						<Button type="Transparent" icon="sap-icon://sys-help"
+							press="onOpenHelpPopover" tooltip="Help" id="popoverAdminApp" />
+					</FlexBox>
+				</l:BlockLayoutCell>
+			</l:BlockLayoutRow>
+		</l:BlockLayout>
+		<Panel width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent">
+			<headerToolbar>
+				<OverflowToolbar height="3rem">
+					<Title text="{i18n>titleNotificationSettings}" />
+				</OverflowToolbar>
+			</headerToolbar>
+			<content>
+				<GenericTile id="NotificationSettings"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>panelTitleNotificationSettings}"
+					subheader="{i18n>tileSubtitleNotificationSettings}" press="onNavigationPress" />
+				<GenericTile id="NotificationDedicatedUsers"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>panelTitleNotificationDedicatedUsers}"
+					visible="{=${settings>/panelRoles/MCCToolSuiteAdmin} ? true : false}"
+					subheader="{i18n>tileSubtitleNotificationDedicatedUsers}"
+					press="onNavigationPress" />
+			</content>
+		</Panel>
+
+		<Panel width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent"
+			visible="{=${settings>/panelRoles/MCCToolSuiteAdmin} || ${settings>/panelRoles/MCCAIAdmin} ? true : false}">
+			<headerToolbar>
+				<OverflowToolbar height="3rem">
+					<Title text="AI Tools" />
+				</OverflowToolbar>
+			</headerToolbar>
+			<content>
+				<GenericTile id="ScenarioAnalyzer"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>pageTitleAISummarizer}" subheader=""
+					visible="{=${settings>/panelRoles/MCCAIAdmin} ? true : false}"
+					press="onNavigationPress">
+					<TileContent footer="{i18n>subtitleScenarioRanking}">
+						<content>
+							<ProgressIndicator percentValue="{local>/averageRating}"
+								displayValue="{local>/averageRating}%" state="Success" width="100%" />
+						</content>
+					</TileContent>
+				</GenericTile>
+
+				<GenericTile id="AIManager"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>panelTitleAIManager}" subheader="{i18n>tileSubtitleAIManager}"
+					press="onNavigationPress"
+					visible="{=${settings>/panelRoles/MCCToolSuiteAdmin} ? true : false}">
+					<TileContent unit="{i18n>scenarios}">
+						<NumericContent value="{settings>/countScenarios}" withMargin="false" />
+					</TileContent>
+				</GenericTile>
+
+				<GenericTile id="FAQSettings"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>panelTitleRAG}"
+					visible="{=${settings>/panelRoles/MCCAIAdmin} ? true : false}"
+					press="onNavigationPress">
+				</GenericTile>
+			</content>
+		</Panel>
+
+		<Panel width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent"
+			visible="{= ${settings>/panelRoles/Roadmap_GER_Admin} || ${settings>/panelRoles/Roadmap_GSS_Admin} || ${settings>/panelRoles/Roadmap_GEM_Admin} || ${settings>/panelRoles/MCCSettingsTags} || ${settings>/panelRoles/MCCToolSuiteAdmin} ? true : false}">
+			<headerToolbar>
+				<OverflowToolbar height="3rem">
+					<Title text="{i18n>panelTitleToolSuite}" />
+				</OverflowToolbar>
+			</headerToolbar>
+			<content>
+				<GenericTile id="RoadmapTasks"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>panelTitleRoadmapTasks}"
+					subheader="{i18n>tileSubtitleRoadmapTasks}" press="onNavigationPress"
+					visible="{= ${settings>/panelRoles/Roadmap_GER_Admin} || ${settings>/panelRoles/Roadmap_GSS_Admin} || ${settings>/panelRoles/Roadmap_GEM_Admin} || ${settings>/panelRoles/MCCToolSuiteAdmin}? true : false}">
+					<TileContent unit="{i18n>unitRoadmap}">
+						<NumericContent value="{settings>/countTasks}" withMargin="false" />
+					</TileContent>
+				</GenericTile>
+
+				<GenericTile id="MCCTags" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>panelTitleMCCTags}" press="onNavigationPress"
+					visible="{= ${settings>/panelRoles/MCCSettingsTags} || ${settings>/panelRoles/MCCToolSuiteAdmin}? true : false}">
+					<TileContent unit="Tags">
+						<NumericContent value="{settings>/countTags}" withMargin="false" />
+					</TileContent>
+				</GenericTile>
+
+				<GenericTile id="Solutions"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>panelTitleSolutions}" subheader="{i18n>tileSubtitleSolutions}"
+					press="onNavigationPress"
+					visible="{=${settings>/panelRoles/MCCToolSuiteAdmin} ? true : false}">
+					<TileContent unit="{i18n>solutions}">
+						<NumericContent value="{settings>/countSolutions}" withMargin="false" />
+					</TileContent>
+				</GenericTile>
+
+			</content>
+		</Panel>
+		<Panel width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent"
+			visible="{= ${settings>/panelRoles/MCCToolSuiteAdmin} || ${settings>/panelRoles/Mail_Admin} ? true : false}">
+			<headerToolbar>
+				<OverflowToolbar height="3rem">
+					<Title text="{i18n>panelTitleMCCMailRoles}" />
+				</OverflowToolbar>
+			</headerToolbar>
+			<content>
+				<GenericTile id="WorkbenchMailRoles"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>panelTitleWorkbenchMailRoles}"
+					subheader="{i18n>tileSubtitleWorkbenchMailRoles}" press="onNavigationPress">
+					<TileContent unit="{i18n>mailRoles}">
+						<NumericContent value="{settings>/countMailRoles}" withMargin="false" />
+					</TileContent>
+				</GenericTile>
+				<GenericTile id="WorkbenchMailTemplates"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					visible="{=${settings>/panelRoles/MCCToolSuiteAdmin} ? true : false}"
+					header="{i18n>panelTitleWorkbenchMailTemplates}"
+					subheader="{i18n>tileSubtitleWorkbenchMailTemplates}" press="onNavigationPress">
+					<TileContent unit="{i18n>mailTemplates}">
+						<NumericContent value="{settings>/countMailTemplates}" withMargin="false" />
+					</TileContent>
+				</GenericTile>
+			</content>
+		</Panel>
+		<Panel width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent"
+			visible="{= ${settings>/panelRoles/MCCToolSuiteAdmin} || ${settings>/panelRoles/SolutionHubEvents_Admin} ? true : false}">
+			<headerToolbar>
+				<OverflowToolbar height="3rem">
+					<Title text="{i18n>panelTitleMCCSolutionHub}" />
+				</OverflowToolbar>
+			</headerToolbar>
+			<content>
+				<GenericTile id="SolutionHubEvents"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>panelTitleEvents}" subheader="{i18n>tileSubtitleEvents}"
+					press="onNavigationPress">
+					<TileContent unit="{i18n>Events}">
+						<NumericContent value="{settings>/countEvents}" withMargin="false" />
+					</TileContent>
+				</GenericTile>
+			</content>
+		</Panel>
+		<Panel width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent"
+			visible="{= ${settings>/panelRoles/MCCToolSuiteAdmin} || ${settings>/panelRoles/WorkforcePlanner_Team_Admin}? true : false}">
+			<headerToolbar>
+				<OverflowToolbar height="3rem">
+					<Title text="{i18n>panelTitleWFP}" />
+				</OverflowToolbar>
+			</headerToolbar>
+			<content>
+				<GenericTile id="WorkforcePlannerAdmin"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>panelTitleWorkforcePlanner}"
+					subheader="{i18n>panelSubtitleWorkforcePlanner}" press="onNavigationPress" />
+			</content>
+		</Panel>
+
+		<Panel width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent"
+			visible="{= ${settings>/panelRoles/MCCToolSuiteAdmin} || ${settings>/panelRoles/MCCSettingsAssistantQD}? true : false}">
+			<headerToolbar>
+				<OverflowToolbar height="3rem">
+					<Title text="{i18n>panelTitleAssistant}" />
+				</OverflowToolbar>
+			</headerToolbar>
+			<content>
+				<GenericTile id="QualificationDispatching"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>panelTitleQualificationDispatching}"
+					subheader="{i18n>tileSubtitleQualificationDispatching}"
+					press="onNavigationPress">
+					<TileContent unit="{i18n>handlingNotes}">
+						<NumericContent value="{settings>/countQualificationDispatching}"
+							withMargin="false" />
+					</TileContent>
+				</GenericTile>
+			</content>
+		</Panel>
+
+		<Panel width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent"
+			visible="{= ${settings>/panelRoles/MCCToolSuiteAdmin} || ${settings>/panelRoles/MCCSettingsWorkplaceCardLinks} ? true : false}">
+			<headerToolbar>
+				<OverflowToolbar height="3rem">
+					<Title text="{i18n>panelTitleWorkplace}" />
+				</OverflowToolbar>
+			</headerToolbar>
+			<content>
+				<GenericTile id="MCCCardLinks"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>panelTitleMCCCardLinks}"
+					subheader="{i18n>tileSubtitleMCCCardLinks}" press="onNavigationPress">
+					<TileContent unit="{i18n>MCCCardLinks}">
+						<NumericContent value="{settings>/countMCCCardLinks}" withMargin="false" />
+					</TileContent>
+				</GenericTile>
+			</content>
+		</Panel>
+		<Panel width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent"
+			visible="{= ${settings>/panelRoles/MCCToolSuiteAdmin} || ${settings>/panelRoles/MCCSettingsErrorlog}? true : false}">
+			<headerToolbar>
+				<OverflowToolbar height="3rem">
+					<Title text="{i18n>panelTitleErrorLog}" />
+				</OverflowToolbar>
+			</headerToolbar>
+			<content>
+				<GenericTile id="AssistantErrorLog"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>titleAssistant}" subheader="{i18n>tileSubtitleErrorLog}"
+					press="onNavigationPress">
+					<TileContent unit="{i18n>errorLog}">
+						<NumericContent value="{settings>/countAssistantErrorLog}"
+							withMargin="false" />
+					</TileContent>
+				</GenericTile>
+				<GenericTile id="ToolSuiteErrorLog"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>titleToolSuite}" subheader="{i18n>tileSubtitleErrorLog}"
+					press="onNavigationPress">
+					<TileContent unit="{i18n>errorLog}">
+						<NumericContent value="{settings>/countToolSuiteErrorLog}"
+							withMargin="false" />
+					</TileContent>
+				</GenericTile>
+			</content>
+		</Panel>
+		<Panel width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent"
+			visible="{=${settings>/panelRoles/MCCToolSuiteAdmin} ? true : false}">
+			<headerToolbar>
+				<OverflowToolbar height="3rem">
+					<Title text="{i18n>panelTitleDocumentStore}" />
+				</OverflowToolbar>
+			</headerToolbar>
+			<content>
+				<GenericTile id="DocumentStoreCF"
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+					header="{i18n>panelTitleDocumentStoreCF}" subheader="Document Templates"
+					press="onNavigationPress" />
+			</content>
+		</Panel>
+	</Page>
+</mvc:View>

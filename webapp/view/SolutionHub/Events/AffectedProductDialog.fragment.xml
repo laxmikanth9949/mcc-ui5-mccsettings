@@ -1,0 +1,56 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog type="Message" contentWidth="700px" contentHeight="600px">
+		<customHeader>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Title class="sapUiSmallMarginBegin" text="Add Product"/>
+				<ToolbarSpacer/>
+				<Button id="btnClear" text="Clear" press="handleClear" visible="false"/>
+				<Button tooltip="{i18n>Close}" icon="sap-icon://decline" press="handleCancel"/>
+			</Toolbar>
+		</customHeader>
+		<NavContainer id="navContainer" width="100%">
+			<Page id="selectProductLine" showHeader="false">
+				<IconTabBar expanded="true" expandable="false" id="line" select="onTabBarSelected" selectedKey="line">
+					<items>
+						<IconTabFilter icon="sap-icon://product" iconColor="Critical" design="Horizontal" text="Product Lines" key="line"/>
+						<IconTabSeparator icon="sap-icon://open-command-field"/>
+						<IconTabFilter icon="sap-icon://product" iconColor="Neutral" design="Horizontal" text="Products" key="product"/>
+					</items>
+				</IconTabBar>
+				<List id="listProductLines" headerText="Select a Product Line" items="{ProductLines>/}" growing="true" growingThreshold="10" width="100%">
+					<infoToolbar>
+						<OverflowToolbar design="Transparent">
+							<SearchField liveChange="onSearchLine" width="97%"/>
+						</OverflowToolbar>
+					</infoToolbar>
+					<StandardListItem title="{ProductLines>LineName}" type="Navigation" press="handleNavNext"/>
+				</List>
+			</Page>
+			<Page id="selectProduct" showHeader="false">
+				<IconTabBar expanded="true" expandable="false" id="product" select="onTabBarSelected" selectedKey="product">
+					<items>
+						<IconTabFilter icon="sap-icon://product" iconColor="Neutral" design="Horizontal" text="Product Lines" key="line"/>
+						<IconTabSeparator icon="sap-icon://open-command-field"/>
+						<IconTabFilter icon="sap-icon://product" iconColor="Critical" design="Horizontal" text="Products" key="product"/>
+					</items>
+				</IconTabBar>
+				<List id="listProducts" headerText="Select a Product" mode="SingleSelect" selectionChange="onSelectProduct" items="{Products>/}"
+					growing="true" growingThreshold="10" width="100%">
+					<infoToolbar>
+						<OverflowToolbar design="Transparent">
+							<SearchField liveChange="onSearchProduct" width="97%"/>
+						</OverflowToolbar>
+					</infoToolbar>
+					<StandardListItem title="{Products>ProductName}"/>
+				</List>
+			</Page>
+		</NavContainer>
+		<beginButton>
+			<Button text="Back" press="handleNavBack"/>
+		</beginButton>
+		<endButton>
+			<Button id="buttonAdd" text="Add" press="addSolution" enabled="false"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

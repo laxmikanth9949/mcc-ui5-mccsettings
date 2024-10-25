@@ -1,0 +1,67 @@
+<mvc:View controllerName="mcc.workbench.admin.settings.controller.Workbench.Roadmap.RoadmapTasks" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.m.semantic" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:sapit="sapit.controls">
+	<semantic:DetailPage id="page" title="{i18n>detailPageTitleWorkbenchRoadmap}" navButtonPress="onNavBack"
+		showNavButton="{device>/system/phone}" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}">
+		<semantic:content>
+			<ObjectHeader id="objectHeader" title="{AdminApp>Name}">
+				<!--<ObjectAttribute text="{i18n>Profile}: {RoadmapProfileID}"/>-->
+				<ObjectAttribute text="{AdminApp>Description}"></ObjectAttribute>
+			</ObjectHeader>
+			<!--filter for deprecated = false, group by category name-->
+			<Table id="lineItemsList" width="auto"
+				items="{path: 'AdminApp>toTasks', filters:[{path: 'Deprecated', operator: 'EQ', value1: false}], sorter: [{path: 'CategoryName', group: true}, {path:'Position'}]}"
+				updateFinished="onListUpdateFinished" mode="SingleSelectMaster" noDataText="{i18n>detailLineItemTableNoDataText}"
+				busyIndicatorDelay="{detailView>/lineItemTableDelay}" class="sapUiResponsiveMargin">
+				<headerToolbar>
+					<Toolbar id="lineItemsToolbar">
+						<Title id="lineItemsHeader" text="{detailView>/lineItemListTitle}"/>
+						<ToolbarSpacer/>
+						<Button icon="sap-icon://add" press="onAddTask"/>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="25%">
+						<Text text="Task Name"/>
+					</Column>
+					<Column width="10%" hAlign="Center">
+						<Text text="Task Type"/>
+					</Column>
+					<Column width="5%" hAlign="Center">
+						<Text text="Importance"/>
+					</Column>
+					<Column visible="{= ${AdminApp>RoadmapProfileID} === 'mcs-gem'}" hAlign="Center" width="5%">
+						<Text text="Scenario"/>
+					</Column>
+					<Column visible="{= ${AdminApp>RoadmapProfileID} === 'mcs-gem'}" width="5%" hAlign="Center">
+						<Text text="Region"/>
+					</Column>
+					<Column width="5%" hAlign="Center">
+						<Text text="Position"/>
+					</Column>
+					<Column visible="{= ${AdminApp>RoadmapProfileID} === 'mcs-gem'}" width="5%">
+						<Text text="Note"/>
+					</Column>
+					<Column>
+						<Text text="Description"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="DetailAndActive" detailPress="onEdit">
+						<cells>
+							<Text text="{AdminApp>TaskName}"/>
+							<Text text="{AdminApp>TaskType}"/>
+							<Text text="{AdminApp>Importance}"/>
+							<Text text="{path:'AdminApp>ScenarioID', formatter:'.formatter.formatRoadmapScenario'}"
+								visible="{= ${AdminApp>RoadmapProfileID} === 'mcs-gem'}"/>
+							<!--formatter scenario-->
+							<Text text="{path:'AdminApp>Region', formatter:'.formatter.formatRoadmapRegionBitwise'}"/>
+							<Text text="{AdminApp>Position}"/>
+							<Text text="{AdminApp>Note}" visible="{= ${AdminApp>RoadmapProfileID} === 'mcs-gem'}"/>
+							<sapit:MarkdownText text="{AdminApp>Description}" renderType="Markdown"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+	</semantic:DetailPage>
+</mvc:View>

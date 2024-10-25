@@ -1,0 +1,79 @@
+<mvc:View controllerName="mcc.workbench.admin.settings.controller.MCSCardsOVP.MCCCardLinks" xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f"
+	xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core" xmlns:m="sap.m" xmlns="sap.ui.table" xmlns:semantic="sap.m.semantic">
+	<m:App>
+		<m:pages>
+			<m:Page title="{i18n>pageTitleMCCCardLinks}" navButtonPress="onNavBack" showNavButton="true">
+				<m:content>
+					<f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false">
+						<!-- DynamicPage Content -->
+						<f:content>
+							<Table id="table" selectionMode="None" visibleRowCountMode="Auto" rows="{ path: 'MCCCardLinksLocal>/'}" ariaLabelledBy="title"
+								rowActionCount="2">
+								<rowActionTemplate>
+									<RowAction>
+										<items>
+											<RowActionItem type="Custom" icon="{= ${MCCCardLinksLocal>_editmode} ? 'sap-icon://save' : 'sap-icon://edit'}" press="firstActionPressed"/>
+											<RowActionItem type="Custom" icon="{= ${MCCCardLinksLocal>_editmode} ? 'sap-icon://decline' : 'sap-icon://delete'}"
+												press="secondActionPressed"/>
+										</items>
+									</RowAction>
+								</rowActionTemplate>
+								<extension>
+									<m:OverflowToolbar>
+										<m:Title id="title" text="{masterView>/title}"/>
+										<m:ToolbarSpacer/>
+										<m:SearchField search="onSearch" width="25rem"/>
+										<m:Button icon="sap-icon://add" type="Emphasized" press="onCreate" tooltip="Create new link"/>
+									</m:OverflowToolbar>
+								</extension>
+								<columns>
+									<Column filterProperty="Card_CardID" sortProperty="Card_CardID">
+										<m:Label text="{i18n>CardID}"/>
+										<template>
+											<m:Input value="{MCCCardLinksLocal>Card_CardID}" tooltip="{MCCCardLinksLocal>Card_CardID}" editable="false"/>
+										</template>
+									</Column>
+									<Column filterProperty="Title" sortProperty="Title">
+										<m:Label text="{i18n>Title}"/>
+										<template>
+											<m:Input value="{MCCCardLinksLocal>Title}" tooltip="{MCCCardLinksLocal>Title}" editable="{MCCCardLinksLocal>_editmode}"
+												valueState="{= ${MCCCardLinksLocal>Title} !== '' ? 'None' : 'Error'}"/>
+										</template>
+									</Column>
+									<Column filterProperty="Icon" sortProperty="Icon" width="15rem">
+										<m:Label text="{i18n>icon}"/>
+										<template>
+											<m:Input value="{MCCCardLinksLocal>Icon}" valueState="{= ${MCCCardLinksLocal>Title} !== '' ? 'None' : 'Error'}"
+												tooltip="{MCCCardLinksLocal>Icon}" editable="{MCCCardLinksLocal>_editmode}"/>
+										</template>
+									</Column>
+									<Column filterProperty="Description" sortProperty="Description" width="15rem">
+										<m:Label text="{i18n>Description}"/>
+										<template>
+											<m:Input value="{MCCCardLinksLocal>Description}" tooltip="{MCCCardLinksLocal>Description}" editable="{MCCCardLinksLocal>_editmode}"
+												valueState="{= ${MCCCardLinksLocal>Description} !== '' ? 'None' : 'Error'}"/>
+										</template>
+									</Column>
+									<Column filterProperty="URL" sortProperty="URL" width="10rem">
+										<m:Label text="{i18n>URL}"/>
+										<template>
+											<m:Input value="{MCCCardLinksLocal>URL}" tooltip="{MCCCardLinksLocal>URL}" editable="{MCCCardLinksLocal>_editmode}"
+												valueState="{= ${MCCCardLinksLocal>URL} !== '' ? 'None' : 'Error'}"/>
+										</template>
+									</Column>
+									<Column filterProperty="Category" sortProperty="Category" width="20rem">
+										<m:Label text="{i18n>Category}"/>
+										<template>
+											<m:Input value="{MCCCardLinksLocal>Category}" tooltip="{MCCCardLinksLocal>Category}" editable="{MCCCardLinksLocal>_editmode}"
+												valueState="{= ${MCCCardLinksLocal>Category} !== '' ? 'None' : 'Error'}"/>
+										</template>
+									</Column>
+								</columns>
+							</Table>
+						</f:content>
+					</f:DynamicPage>
+				</m:content>
+			</m:Page>
+		</m:pages>
+	</m:App>
+</mvc:View>

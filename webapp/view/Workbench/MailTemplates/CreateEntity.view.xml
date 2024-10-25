@@ -1,0 +1,55 @@
+<mvc:View controllerName="mcc.workbench.admin.settings.controller.Workbench.MailTemplates.CreateEntity" xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.m.semantic" xmlns:smart="sap.ui.comp.smartfield" xmlns="sap.m">
+	<semantic:DetailPage id="page" title="{viewModel>/viewTitle}" navButtonPress="onNavBack" busy="{viewModel>/busy}">
+		<semantic:content>
+			<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="newEntitySimpleForm"
+				labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+				title="{= ${viewModel>/mode} === 'edit'? 'Edit MCCIssueTracking.MailTemplates': 'New MCCIssueTracking.MailTemplates'}">
+				<f:content>
+					<Label text="Template Name"/>
+					<Input name="TemplateName" id="TemplateName_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement"
+						value="{ path: 'TemplateName', type: 'sap.ui.model.odata.type.String' }"/>
+					<Label text="Profile"/>
+					<Select width="100%" id="profile_id" forceSelection="false" selectedKey="{profile}" showSecondaryValues="true"
+						class="sapUiSmallMarginBottom" items="{ path: 'viewModel>/ProfileDropdownsValues', sorter: { path: 'Name' } }">
+						<core:ListItem key="{viewModel>Key}" text="{viewModel>Key}" additionalText="{viewModel>Name}"/>
+					</Select>
+					<Label text="Template Description"/>
+					<Input name="TemplateDescription" id="TemplateDescription_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement"
+						value="{ path: 'TemplateDescription', type: 'sap.ui.model.odata.type.String' }"/>
+					<Label text="Template Type"/>
+					<Select width="100%" id="TemplateType_id" forceSelection="false" selectedKey="{TemplateType}" showSecondaryValues="false"
+						class="sapUiSmallMarginBottom" items="{ path: 'viewModel>/TemplateTypeDropdownsValues', sorter: { path: 'Name' } }">
+						<core:ListItem key="{viewModel>Key}" text="{viewModel>Name}"/>
+					</Select>
+					<Label text="Template Category" visible="{=${profile}==='mcs-ger'}"/>
+					<!--	<Input name="Category" id="Category_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement"
+						value="{ path: 'Category', type: 'sap.ui.model.odata.type.String' }"/>-->
+					<Select width="100%" id="Category_id" forceSelection="false" selectedKey="{Category}" showSecondaryValues="false"
+						class="sapUiSmallMarginBottom" visible="{=${profile}==='mcs-ger'}">
+						<core:Item key="1. Request for Global Escalation" text="1. Request for Global Escalation"/>
+						<core:Item key="2. Evaluation" text="2. Evaluation"/>
+						<core:Item key="3. Judging" text="3. Judging"/>
+					</Select>
+					<Label text="Template Category" visible="{=${profile}!=='mcs-ger'}"/>
+					<Input name="Category" valueLiveUpdate="true" liveChange="_validateSaveEnablement" visible="{=${profile}!=='mcs-ger'}"
+						value="{ path: 'Category', type: 'sap.ui.model.odata.type.String' }"/>
+					<Label text="Position" />
+					<StepInput name="Position" change="_validateSaveEnablement" value="{Position}" />
+					<VBox>
+						<CheckBox text="Use Subscription Roles" selected="{UseSubscriptionRoles}"/>
+						<CheckBox text="For Externals" selected="{forExternals}"/>
+						<CheckBox text="For Internals" selected="{forInternals}"/>
+					</VBox>
+				</f:content>
+			</f:SimpleForm>
+		</semantic:content>
+		<semantic:saveAction>
+			<semantic:SaveAction id="save" enabled="{viewModel>/enableCreate}" press="onSave"/>
+		</semantic:saveAction>
+		<semantic:cancelAction>
+			<semantic:CancelAction id="cancel" press="onCancel"></semantic:CancelAction>
+		</semantic:cancelAction>
+	</semantic:DetailPage>
+</mvc:View>

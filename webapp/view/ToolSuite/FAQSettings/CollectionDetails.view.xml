@@ -1,0 +1,75 @@
+<mvc:View
+    controllerName="mcc.workbench.admin.settings.controller.ToolSuite.FAQSettings.CollectionDetails"
+    xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core"
+    xmlns:m="sap.m" xmlns="sap.ui.table">
+    <m:App>
+        <m:pages>
+            <m:Page title="Collection Documents" navButtonPress="onNavBack" showNavButton="true">
+                <m:content>
+                    <f:DynamicPage
+                        id="dynamicPageId" toggleHeaderOnTitleClick="false">
+                        <!-- DynamicPage Content -->
+                        <f:content>
+                            <Table id="collectionDetailsTable" selectionMode="None"
+                                visibleRowCountMode="Auto"
+                                rows="{path: 'collectionsModel>/documents'}" ariaLabelledBy="title"
+                                rowActionCount="2">
+                                <rowActionTemplate>
+                                    <RowAction>
+                                        <items>
+                                            <RowActionItem type="Custom" icon="sap-icon://edit"
+                                                press="onEdit" />
+                                            <RowActionItem type="Custom" icon="sap-icon://delete"
+                                                press="onDelete" />
+                                        </items>
+                                    </RowAction>
+                                </rowActionTemplate>
+                                <extension>
+                                    <m:OverflowToolbar>
+                                        <m:ToolbarSpacer />
+                                        <m:Button icon="sap-icon://add" type="Emphasized"
+                                            press="onCreate" tooltip="Create new Document" />
+                                    </m:OverflowToolbar>
+                                </extension>
+                                <Column filterProperty="title" sortProperty="title">
+                                    <m:Label text="Title" />
+                                    <template>
+                                        <m:Input value="{collectionsModel>metadata/title}"
+                                            tooltip="{collectionsModel>metadata/title}"
+                                            editable="false" />
+                                    </template>
+                                </Column>
+
+                                <Column filterProperty="firstChunk" sortProperty="firstChunk">
+                                    <m:Label text="Data Preview" />
+                                    <template>
+                                        <m:Input value="{collectionsModel>firstChunk}"
+                                            tooltip="{collectionsModel>firstChunk}" editable="false" />
+                                    </template>
+                                </Column>
+
+                                <Column filterProperty="modifiedBy" sortProperty="modifiedBy">
+                                    <m:Label text="Modified By" />
+                                    <template>
+                                        <m:Input value="{collectionsModel>metadata/modifiedBy}"
+                                            tooltip="{collectionsModel>metadata/modifiedBy}"
+                                            editable="false" />
+                                    </template>
+                                </Column>
+
+                                <Column filterProperty="webUrl" sortProperty="webUrl">
+                                    <m:Label text="Web Url" />
+                                    <template>
+                                        <m:Input value="{collectionsModel>metadata/webUrl}"
+                                            tooltip="{collectionsModel>metadata/webUrl}"
+                                            editable="false" />
+                                    </template>
+                                </Column>
+                            </Table>
+                        </f:content>
+                    </f:DynamicPage>
+                </m:content>
+            </m:Page>
+        </m:pages>
+    </m:App>
+</mvc:View>

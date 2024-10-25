@@ -1,0 +1,20 @@
+<mvc:View displayBlock="true"
+    controllerName="mcc.workbench.admin.settings.controller.AIScenario.Main" height="100%"
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:form="sap.ui.layout.form">
+    <App>
+        <f:FlexibleColumnLayout id="flexibleColumnLayout" backgroundDesign="Solid">
+            <f:beginColumnPages>
+                <mvc:XMLView id="beginView"
+                    viewName="mcc.workbench.admin.settings.view.AIScenario.view.Main" />
+            </f:beginColumnPages>
+            <f:midColumnPages>
+                <mvc:XMLView id="midView"
+                    viewName="mcc.workbench.admin.settings.view.AIScenario.view.Detail" />
+            </f:midColumnPages>
+            <f:endColumnPages>
+                <mvc:XMLView id="endView"
+                    viewName="mcc.workbench.admin.settings.view.AIScenario.view.Analysis" />
+            </f:endColumnPages>
+        </f:FlexibleColumnLayout>
+    </App>
+</mvc:View>

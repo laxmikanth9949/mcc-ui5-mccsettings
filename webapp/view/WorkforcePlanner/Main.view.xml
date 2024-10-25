@@ -1,0 +1,76 @@
+<mvc:View controllerName="mcc.workbench.admin.settings.controller.WorkforcePlanner.Main" xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f"
+	xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core" xmlns:m="sap.m" xmlns="sap.ui.table">
+	<m:App>
+		<m:pages>
+			<m:Page title="{i18n>PageTitleWorkforcePlanner}" navButtonPress="onNavBack" showNavButton="true">
+				<m:content>
+					<Table id="memberTable" rows="{path: 'TeamMember>/', sorter: {path: 'user/name'}}" alternateRowColors="true" selectionMode="None"
+						visibleRowCountMode="Auto" ariaLabelledBy="title" enableCellFilter="true" rowActionCount="2">
+						<rowActionTemplate>
+							<RowAction>
+								<items>
+									<RowActionItem type="Custom" icon="sap-icon://edit" press="onEdit" visible="{=!${TeamMember>bEdit}}"/>
+									<RowActionItem type="Custom" icon="sap-icon://delete" press="onDelete" visible="{=!${TeamMember>bEdit}}"/>
+									<RowActionItem type="Custom" icon="sap-icon://save" press="onSave" visible="{TeamMember>bEdit}"/>
+									<RowActionItem type="Custom" icon="sap-icon://decline" press="onCancelSave" visible="{TeamMember>bEdit}"/>
+								</items>
+							</RowAction>
+						</rowActionTemplate>
+						<extension>
+							<m:OverflowToolbar style="Clear">
+								<m:Label text="Team:"/>
+								<m:Select tooltip="Select your team" change="onTeamChange" items="{AdminApp>/Teams}" forceSelection="false" width="15%">
+									<core:Item text="{AdminApp>name}" key="{AdminApp>teamID}"/>
+								</m:Select>
+								<m:ToolbarSpacer/>
+								<m:MessageStrip id="msgISP" type="Warning" showIcon="true" visible="false"
+									text="Connection to the service needed to load user data is unavailable. Therefore it is currently not possible to add team members."/>
+								<m:Button id="addMember" text="Add" icon="sap-icon://add" press="onAddPress" enabled="false"/>
+							</m:OverflowToolbar>
+						</extension>
+						<columns>
+							<Column filterProperty="user/userID" width="20%">
+								<m:Label text="User ID"/>
+								<template>
+									<m:Text text="{TeamMember>user/userID}" wrapping="false"/>
+								</template>
+							</Column>
+							<Column filterProperty="user/name" sortProperty="user/name" sorted="true" width="20%">
+								<m:Label text="Name"/>
+								<template>
+									<m:Text text="{TeamMember>user/name}" wrapping="false"/>
+								</template>
+							</Column>
+							<Column filterProperty="user/email" width="20%">
+								<m:Label text="Email"/>
+								<template>
+									<m:Text text="{TeamMember>user/email}" wrapping="false"/>
+								</template>
+							</Column>
+							<Column filterProperty="validFrom" sortProperty="validFrom" width="20%">
+								<m:Label text="Active from"/>
+								<template>
+									<m:FlexBox>
+										<m:Text text="{path:'TeamMember>validFrom', formatter: '.formatter.formatDate'}" wrapping="false" visible="{=!${TeamMember>bEdit}}"/>
+										<m:DatePicker value="{path:'TeamMember>validFrom', formatter: '.formatter.formatDate'}" displayFormat="MMM dd, YYYY" change="onDateChange"
+											visible="{TeamMember>bEdit}"/>
+									</m:FlexBox>
+								</template>
+							</Column>
+							<Column filterProperty="validTo" sortProperty="validTo" width="20%">
+								<m:Label text="Active to"/>
+								<template>
+									<m:FlexBox>
+										<m:Text text="{path:'TeamMember>validTo', formatter: '.formatter.formatDate'}" wrapping="false" visible="{=!${TeamMember>bEdit}}"/>
+										<m:DatePicker value="{path:'TeamMember>validTo', formatter: '.formatter.formatDate'}" displayFormat="MMM dd, YYYY" change="onDateChange"
+											visible="{TeamMember>bEdit}"/>
+									</m:FlexBox>
+								</template>
+							</Column>
+						</columns>
+					</Table>
+				</m:content>
+			</m:Page>
+		</m:pages>
+	</m:App>
+</mvc:View>

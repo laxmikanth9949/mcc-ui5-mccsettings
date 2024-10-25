@@ -1,0 +1,54 @@
+<mvc:View controllerName="mcc.workbench.admin.settings.controller.Workbench.MailTemplates.Detail" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.m.semantic" xmlns:footerbar="sap.ushell.ui.footerbar">
+	<semantic:DetailPage id="page" title="{i18n>detailPageTitleWorkbenchMailTemplates}" navButtonPress="onNavBack"
+		showNavButton="{device>/system/phone}" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}">
+		<semantic:content>
+			<ObjectHeader id="objectHeader" title="{TemplateDescription}">
+				<ObjectAttribute text="{i18n>Profile}: {profile}"/>
+				<ObjectAttribute text="Template Name: {TemplateName}"/>
+				<ObjectAttribute text="{i18n>TemplateType}: {TemplateType}"/>
+				<ObjectAttribute text="{i18n>TemplateCategory}: {Category}"/>
+				<ObjectAttribute text="Position: {Position}"/>
+			</ObjectHeader>
+			<HBox class="sapUiMediumMarginBegin">
+				<CheckBox text="Use Subscription Roles" selected="{UseSubscriptionRoles}" enabled="false"/>
+				<CheckBox text="For Externals" selected="{forExternals}" enabled="false"/>
+				<CheckBox text="For Internals" selected="{forInternals}" enabled="false"/>
+			</HBox>
+			<Table id="lineItemsList" width="auto" items="{MailRoles}" updateFinished="onListUpdateFinished" mode="Delete" delete="onDeleteMailTemplate"
+				noDataText="{i18n>detailLineItemTableNoDataText}" busyIndicatorDelay="{detailView>/lineItemTableDelay}" class="sapUiResponsiveMargin">
+				<headerToolbar>
+					<Toolbar id="lineItemsToolbar">
+						<Title id="lineItemsHeader" text="{detailView>/lineItemListTitle}"/>
+						<ToolbarSpacer/>
+						<!--<Button icon="sap-icon://add" press="onAddMailRole"/>-->
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column>
+						<Text text="Role Name"/>
+					</Column>
+					<Column>
+						<Text text="Role Type"/>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Right"></Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier title="{RoleName}{=!${RoleName}?'-':''}"/>
+							<ObjectIdentifier text="{path:'RoleType', formatter: '.formatRoleType'}"/>
+							<ObjectNumber unit="{ToOrCC}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+		<semantic:editAction>
+			<semantic:EditAction id="edit" press="onEdit"/>
+		</semantic:editAction>
+		<semantic:customFooterContent>
+			<Button enabled="true" id="deleteButton" press="onDelete" text="Delete"/>
+		</semantic:customFooterContent>		
+	</semantic:DetailPage>
+</mvc:View>

@@ -1,0 +1,68 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:t="sap.ui.table"
+	controllerName="mcc.workbench.admin.settings.controller.ToolSuite.Notifications.NotificationDedicatedUsers" xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page title="MCC Settings - Maintain Notification Recipients" showNavButton="true" navButtonPress="onNavBack">
+				<content>
+					<t:Table selectionMode="None" visibleRowCount="12" fixedColumnCount="1" id="NotificationRecipientTable" 
+				rows="{ path: 'MCCToolSuite>/NotificationSettingsDedicatedUsers', parameters: { 'expand' : 'toNotificationType' }, filters:[ {path: 'toNotificationType/NotificationCategory', operator: 'EQ', value1: 'process'}, {path: 'toNotificationType/NotificationCategory', operator: 'EQ', value1: 'both'}, {path: 'toNotificationType/bVisibleInUserSettings', operator: 'EQ', value1: 'true'}], sorter: {path: 'toNotificationType/NotificationGroup'}}"
+
+						ariaLabelledBy="title" rowActionCount="2">
+						<t:rowActionTemplate>
+							<t:RowAction>
+								<t:items>
+										<!--	<t:RowActionItem type="Custom" icon="sap-icon://edit" tooltip="Edit" press="onEditPress" visible="{ path: 'MCCToolSuite>toNotificationType/allowedFilterCriteria', formatter: '.formatter.checkVisibility' }" /> -->
+									<t:RowActionItem type="Custom" icon="sap-icon://delete" tooltip="Delete" press="onDelete" />
+								</t:items>
+							</t:RowAction>
+						</t:rowActionTemplate>
+							<t:extension>
+							<OverflowToolbar style="Clear">
+								<ToolbarSpacer/>
+						<!--		<Label  text="{i18n>ExpertMode}"/>
+							<Switch change="onExpertModeChange" state="false"></Switch> -->
+							
+								<Button  icon="sap-icon://add" text="Add Row" press="onAddPress" class="sapUiLargeMarginEnd" type="Transparent" />
+							</OverflowToolbar>
+						</t:extension>
+						<t:columns>
+							<t:Column filterProperty="NotificationType" sortProperty="NotificationType" width="12rem">
+								<Label text="{i18n>NotificationType}"/>
+								<t:template>
+									<Text text="{MCCToolSuite>NotificationType}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="MailAddress" sortProperty="MailAddress">
+								<Label text="{i18n>MailAddress}"/>
+								<t:template>
+									<TextArea rows="1"  id="mailAdressesInput" growing="true" change="onMailChange" value="{MCCToolSuite>MailAddress}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="bGetTeamsNotification" sortProperty="bGetTeamsNotification" width="5rem">
+								<Label text="Teams"/>
+								<t:template>
+									<Switch change="onSwitchChange($event, 'bGetTeamsNotification')" state="{MCCToolSuite>bGetTeamsNotification}"></Switch>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="bGetMailNotification" sortProperty="bGetMailNotification" width="5rem">
+								<Label text="Mail"/>
+								<t:template>
+									<Switch change="onSwitchChange($event, 'bGetMailNotification')" state="{MCCToolSuite>bGetMailNotification}"></Switch>
+								</t:template>
+							</t:Column>
+								<t:Column filterProperty="Filter" sortProperty="Filter" >
+								<HBox alignItems="Center">
+								<Label text="{i18n>Filter}"/> 
+								<Button icon="sap-icon://hint" press="onPressFilterDesc" class="sapUiTinyMarginBegin"></Button>
+								</HBox>
+								<t:template>
+									<TextArea value="{MCCToolSuite>Filter}" rows="1"  editable="false" growing="true"/>
+								</t:template>
+							</t:Column>
+						</t:columns>
+					</t:Table>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

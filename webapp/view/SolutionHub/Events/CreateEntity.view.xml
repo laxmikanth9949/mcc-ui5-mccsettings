@@ -1,0 +1,80 @@
+<mvc:View controllerName="mcc.workbench.admin.settings.controller.SolutionHub.Events.CreateEntity" xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.m.semantic" xmlns:smart="sap.ui.comp.smartfield" xmlns="sap.m" xmlns:sapit="sapit.controls">
+	<semantic:DetailPage id="page" busy="{viewModel>/busy}" navButtonPress="onCancel" showNavButton="true">
+		<semantic:content>
+			<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="newEntitySimpleForm"
+				labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+				title="{= ${viewModel>/mode} === 'edit'? 'Edit Event': 'New Event'}">
+				<f:content>
+					<core:Title text="Event Details"/>
+					<Label text="Event Name" required="true"/>
+					<Input name="EventName" id="EventName_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement" enabled="true" visible="true"
+						value="{ path: 'EventName', type: 'sap.ui.model.odata.type.String' }" valueState="{= ${EventName} !== '' ? 'None' : 'Error'}"/>
+					<Label text="Description" required="false"/>
+					<TextArea name="Event Details" id="EventDetails_id" growing="true" growingMaxLines="5" valueLiveUpdate="true"
+						liveChange="_validateSaveEnablement" enabled="true" visible="true" value="{ path: 'EventDetails', type: 'sap.ui.model.odata.type.String' }"/>
+					<Label text="Key Contacts" required="true"/>
+					<MultiInput name="Contacts" id="Contacts_id" showValueHelp="true" valueHelpOnly="true" tokens="{viewModel>/Contacts}"
+						tokenUpdate="updateContactsToken" valueLiveUpdate="true" valueHelpRequest="onOpenUserSearchDialog"
+						valueState="{= ${viewModel>/Contacts}.length > 0 ? 'None' : 'Error'}">
+						<tokens>
+							<Token key="{viewModel>userId}" text="{viewModel>nameId}"/>
+						</tokens>
+					</MultiInput>
+					<Label text="Status" required="true"/>
+					<Select width="100%" id="Status_id" forceSelection="false" enabled="true" selectedKey="{Status}" showSecondaryValues="false"
+						class="sapUiSmallMarginBottom" items="{ path: 'viewModel>/StatusDrodpownValues', sorter: { path: 'Status' } }">
+						<core:ListItem key="{viewModel>Name}" text="{viewModel>Name}"/>
+					</Select>
+					<Label text="Event Type" required="true"/>
+					<Select width="100%" id="EventType_id" forceSelection="false" enabled="true" selectedKey="{EventType}" showSecondaryValues="false"
+						class="sapUiSmallMarginBottom" items="{ path: 'viewModel>/EventTypeDropdownValues', sorter: { path: 'EventType' } }"
+						valueState="{= ${EventType} !== '' ? 'None' : 'Error'}">
+						<core:ListItem key="{viewModel>Key}" text="{viewModel>Name}"/>
+					</Select>
+					<Label text="Solution Area" required="true"/>
+					<Select width="100%" id="SolutionArea_id" forceSelection="false" enabled="true" selectedKey="{SolutionArea}" showSecondaryValues="false"
+						class="sapUiSmallMarginBottom" items="{ path: 'viewModel>/EventSolutionAreaDropdownValues', sorter: { path: 'SolutionArea' } }"
+						valueState="{= ${SolutionArea} !== '' ? 'None' : 'Error'}">
+						<core:ListItem key="{viewModel>Key}" text="{viewModel>Name}"/>
+					</Select>
+					<core:Title text="Event Duration"/>
+					<Label text="Start DateTime in UTC" required="true"/>
+					<DateTimePicker name="StartDateTime" change="_validateSaveEnablement" id="StartDateTime_id" enabled="true" visible="true"
+						placeholder="MMM dd, YYYY, HH:mm AM/PM" displayFormat="medium" valueState="{= ${StartDateTime} !== null ? 'None' : 'Error'}"
+						value="{ path: 'StartDateTime', formatter: '.formatter.formatEventDateTime'}"/>
+					<CheckBox id="cbAllDay" selected="false" text="All Day" select="_setDateAllDay"/>
+					<Label text="End DateTime in UTC" required="true"/>
+					<DateTimePicker name="EndDateTime" change="_validateSaveEnablement" id="EndDateTime_id" enabled="true" visible="true"
+						placeholder="MMM dd, YYYY, HH:mm AM/PM" displayFormat="medium" valueState="{= ${EndDateTime} !== null ? 'None' : 'Error'}"
+						value="{ path: 'EndDateTime', formatter: '.formatter.formatEventDateTime' }"/>
+					<ToolbarSpacer/>
+					<core:Title text="Additional Information"/>
+					<Label text="Main Product" required="false"/>
+					<Input name="MainProduct" id="MainProduct_id" valueLiveUpdate="true" valueHelpOnly="true" showValueHelp="true"
+						valueHelpRequest="openSolutionDialog" liveChange="_validateSaveEnablement" enabled="true" visible="true"
+						value="{ path: 'MainProduct', type: 'sap.ui.model.odata.type.String', formatter: '.formatter.formatMainProductId' }"/>
+					<Label text="URL" required="false"/>
+					<Input name="URL" id="URL_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement" enabled="true" visible="true"
+						value="{ path: 'URL', type: 'sap.ui.model.odata.type.String' }"/>
+					<Label text="URL Description" required="false"/>
+					<Input name="URLDesc" id="URLDesc_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement" enabled="true" visible="true"
+						value="{ path: 'URLDesc', type: 'sap.ui.model.odata.type.String' }"/>
+					<Label text="Additional Event Information" required="false"/>
+					<VBox id="markdownBox" class="markdownTextBorder">
+						<sapit:MarkdownEditor id="myMarkdownEditor"
+							toolbar='["heading" , "bold" , "italic" , "|" , "unordered-list" , "ordered-list" , "|" , "preview" , "|" , "guide" ]'
+							value="{AdditionalInfo}" placeholder="Start typing..." spellChecker="false" lineWrapping="true"/>
+					</VBox>
+				</f:content>
+			</f:SimpleForm>
+		</semantic:content>
+		<semantic:saveAction>
+			<semantic:SaveAction id="save" enabled="{viewModel>/enableCreate}" press="onSave"/>
+		</semantic:saveAction>
+		<semantic:cancelAction>
+			<semantic:CancelAction id="cancel" press="onCancel"></semantic:CancelAction>
+		</semantic:cancelAction>
+	</semantic:DetailPage>
+</mvc:View>
