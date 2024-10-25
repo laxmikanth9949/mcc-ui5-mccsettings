@@ -1,0 +1,14 @@
+/* Enter your custom styles here */
+
+.textTitleEnvironment {
+    margin-left: 3px;
+    font-weight: bold;
+}
+
+.markdownTextBorder {
+    border: 1px solid #89919a !important;
+    background: white !important;
+    border-radius: .10rem !important;
+    font-family: "72" !important;
+    font-size: 14px !important;
+}

@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">	
+	<SelectDialog
+		id="employeeSearchDialog"
+		noDataText="No employees found ..."
+		title="Employee Search"
+		contentWidth="25rem"
+		contentHeight="30rem"
+		initialFocus="SearchField"
+		search="onEmployeeSearch"
+		confirm="onEmployeeSelected"
+		cancel="onEmployeeDialogClose"
+		items="{
+			path: 'employees>/'
+		}">
+		<StandardListItem
+			title="{employees>firstName} {employees>lastName}"
+			description="{employees>ID}"
+			type="Active" />
+	</SelectDialog>
+</core:FragmentDefinition>
