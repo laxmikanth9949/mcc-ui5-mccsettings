@@ -1,0 +1,33 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "routes": [
+    {
+      "source": "^/apimcf(.*)$",
+      "target": "$1",
+      "destination": "ext_mcc_apim_cf"
+    },
+    {
+      "source": "^/apim(.*)$",
+      "target": "$1",
+      "csrfProtection": false,
+      "destination": "ext_mcc_apim"
+    },
+    {
+      "source": "^/sapit-employee-data",
+      "target": "/",
+      "csrfProtection": false,
+      "destination": "sapit-employee-data"
+    },
+    {
+      "source": "^/user-api(.*)",
+      "target": "$1",
+      "service": "sap-approuter-userapi"
+    },
+    {
+      "source": "^(.*)$",
+      "target": "$1",
+      "destination": "local"
+    }
+  ]
+}

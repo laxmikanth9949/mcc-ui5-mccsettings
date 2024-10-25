@@ -1,0 +1,27 @@
+{
+  "xsappname": "mcc-settings-xsuaa",
+  "tenant-mode": "dedicated",
+  "description": "Security profile of called application",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.user",
+      "description": "Can access MCC Settings App"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "User",
+      "description": "MCC Settings App User - Can access MCC Settings App",
+      "scope-references": [
+        "$XSAPPNAME.user"
+      ]
+    }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": [
+        "https://**.hana.ondemand.com/**",
+        "https://**.applicationstudio.cloud.sap/**",
+        "http://localhost:*/**"
+    ]
+  }
+}
